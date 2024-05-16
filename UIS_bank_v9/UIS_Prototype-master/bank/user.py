@@ -1,1 +1,0 @@
-db = "dbname='bank24017' user='TODO: ADD USERNAME HERE' host='127.0.0.1' password = '<TODO: ADD PASSWORD HERE>'"
