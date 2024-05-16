@@ -1,4 +1,4 @@
-from user import db
+from bank.user import db
 from flask import Flask
 import psycopg2
 from flask_bcrypt import Bcrypt
