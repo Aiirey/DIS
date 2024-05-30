@@ -26,7 +26,8 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link" href="{{ url_for('Login.home') }}">Home</a>
+              <a class="nav-item nav-link" href="{{ url_for('Login.login') }}">Home</a>
+              <!-- Dropdown top right -->
               {% if current_user.is_authenticated %}
                 <li class="dropdown">
                  <a href="#" class="nav-item nav-link dropdown-toggle" data-toggle="dropdown">UIS bank<b class="caret"></b></a>
@@ -42,13 +43,12 @@
                </li>
               {% else %}
               {% endif %}
-               <a class="nav-item nav-link" href="{{ url_for('Login.about') }}">About</a>
+              <a class="nav-item nav-link" href="#">About</a>
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
               {% if current_user.is_authenticated %}
                 <a class="nav-item nav-link" href="{{ url_for('Login.account') }}">Account</a>
-
 			          {% if "customer" == role %}
                 <a class="nav-item nav-link" href="{{ url_for('Customer.transfer') }}">Transfer</a>
                 <a class="nav-item nav-link" href="{{ url_for('Customer.invest') }}">Investments</a>
@@ -86,23 +86,33 @@
           <div class="content-section">
             <h3>Account</h3>
               <ul class="list-group">
+              {% if current_user.is_authenticated %}
 
 			   {% if "customer" == role %}
 			        <p>UIS Prototype-customer</p>
+                <li class="list-group-item list-group-item-light">Accounts</li>
                 <li class="list-group-item list-group-item-light"><a class="nav-item nav-link" href="{{ url_for('Customer.transfer') }}">Transfer</a></li>
                 <li class="list-group-item list-group-item-light">Checking Accounts</li>
                 <li class="list-group-item list-group-item-light">Investment Accounts</li>
                 <li class="list-group-item list-group-item-light"><a class="nav-item nav-link" href="{{ url_for('Customer.invest') }}">View investment accounts</a></li>
  			   {% endif %}
-	 	       {% if role == 'employee' %}
+
+
+			      {% if role == 'employee' %}
 			        <p>UIS Prototype-emp</p>
+                <li class="list-group-item list-group-item-light">Accounts</li>
                 <li class="list-group-item list-group-item-light">Transfer</li>
                 <li class="list-group-item list-group-item-light">Checking Accounts</li>
                 <li class="list-group-item list-group-item-light">Investment Accounts</li>
                 <li class="list-group-item list-group-item-light"><a class="nav-item nav-link" href="{{ url_for('Employee.investe') }}">View investment accounts</a></li>
- 			   {% endif %}
+ 			      {% endif %}
 
+
+               <li class="list-group-item list-group-item-light">etc</li>
+
+              {% else %}
                 <li class="list-group-item list-group-item-light">etc</li>
+              {% endif %}
               </ul>
             </p>
           </div>

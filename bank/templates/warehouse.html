@@ -1,0 +1,7 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>{{ current_user.name }}</h1>
+    {% for item in warehouse %}
+        <p>{{ item.name }}</p>
+    {% endfor %}
+{% endblock content %}

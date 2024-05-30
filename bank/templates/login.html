@@ -42,17 +42,8 @@
             <small class="text-muted">
                 <a href="#">Forgot Password?</a>
             </small>
-            <small class="text-muted ml-2">
-                {% if is_employee %}
-                    <a href="/login?is_employee=false">Customer login?</a>
-                {% else %}
-                    <a href="/login?is_employee=true">Employee login?</a>
-                {%  endif %}
-                <a href="/direct?is_employee=false">Direct Customer login</a>
-             </small>
         </form>
 
     </div>
-
 
 {% endblock content %}
