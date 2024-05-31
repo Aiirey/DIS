@@ -22,8 +22,6 @@ def load_user(user_id):
 
     cur.execute(user_sql, (int(user_id),))
     if cur.rowcount > 0:
-        return Employees(cur.fetchone()) if schema == 'employees' else Customers(cur.fetchone())
-    else:
         return None
 
 
