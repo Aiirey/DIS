@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS Updates(
 	ID integer IDENTITY[(1,1)] PRIMARY KEY,
 	user integer,
 	item integer,
-	timestampp TIMESTAMP, -- TODO: hvad fuck er et timestamp??
+	_timestamp TIMESTAMP, -- TODO: hvad fuck er et timestamp??
 	change integer,
 	CONSTRAINT updates_key PRIMARY KEY (user, item),
 	FOREIGN KEY (user) REFERENCES User(ID),
