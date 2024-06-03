@@ -6,6 +6,12 @@ from psycopg2 import sql
 
 @login_manager.user_loader
 def load_user(user_id):
+    print(user_id)
+    user = Users(user_id, "HELLO")
+    if user_id != -1:
+        user.active = True
+    return user
+
     # TODO: Fix
     cur = conn.cursor()
 
@@ -25,10 +31,16 @@ def load_user(user_id):
         return None
 
 
-class Users():
+class Users(UserMixin):
     def __init__(self, ID, name_):
-        self.ID = ID
+        self.id = ID
         self.name_ = name_
+        self.active = False
+
+    @property
+    def is_active(self):
+        return self.active
+
 
 class Supplier():
     def __init__(self, ID, name_):

@@ -9,40 +9,32 @@ Login = Blueprint('Login', __name__)
 
 @Login.route("/login", methods=['GET', 'POST'])
 def login():
-
-    session["state"]="login"
-    role=None
-
     if current_user.is_authenticated:
-        return redirect(url_for('Login.login'))
+        print("hej")
+        return redirect(url_for('Warehouse.index'))
 
     form = LoginForm()
 
     if form.validate_on_submit():
-
-        user = {}
+        user = Users(1, "John")
+        user.active = True
         
-        if user != None and bcrypt.check_password_hash(user[2], form.password.data):
+        if user != None and True or bcrypt.check_password_hash(user.name_, form.password.data):
 
-            session["id"] = form.id.data
+            session["id"] = form.username.data
 
             login_user(user, remember=form.remember.data)
-            flash('Login successful.', 'success')
-            next_page = request.args.get('next')
-            return redirect(next_page) if next_page else redirect(url_for('Login.login'))
+            return redirect(url_for('Warehouse.index'))
         else:
             flash('Login Unsuccessful. Please check identifier and password', 'danger')
 
-    return render_template('login.html', title='Login', form=form
-    , role=role
-    )
+    return render_template('login.html', title='Login', form=form)
 
 @Login.route("/logout")
 def logout():
     session["id"]=-1
     logout_user()
-    return redirect(url_for('Login'))
-
+    return redirect(url_for('Login.login'))
 
 @Login.route("/account")
 @login_required
