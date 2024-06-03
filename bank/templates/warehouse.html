@@ -1,7 +1,25 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1>{{ current_user.name }}</h1>
-    {% for item in warehouse %}
-        <p>{{ item.name }}</p>
-    {% endfor %}
+    <h1>{{ current_user.name_ }}</h1>
+    {% if current_user.is_authenticated %}
+        <form class="d-flex" role="search">
+            <input class="form-control me-2 search-bar" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-search" type="submit">Search</button>
+        </form>
+    {% endif %}
+    <h2>Oversigt over lager</h2>
+    <ul>
+        {% for root_category in warehouse recursive %}
+            <li> <span class="category">{{ root_category.name }}</span>
+            <ul>
+                {% if root_category.items %}
+                    {% for item in root_category.items %}
+                        <li>{{ item.name}} {{ item.amount }}</li>
+                    {% endfor %}
+            {% endif %}
+            {% if root_category.subcategories %}
+                {{ loop(root_category.subcategories)}}
+            {% endif %}</ul></li>
+        {% endfor %}
+    </ul>
 {% endblock content %}

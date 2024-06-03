@@ -32,9 +32,9 @@ def load_user(user_id):
 
 
 class Users(UserMixin):
-    def __init__(self, ID, name_):
+    def __init__(self, ID, name):
         self.id = ID
-        self.name_ = name_
+        self.name = name
         self.active = False
 
     @property
@@ -43,20 +43,22 @@ class Users(UserMixin):
 
 
 class Supplier():
-    def __init__(self, ID, name_):
+    def __init__(self, ID, name):
         self.ID = ID
-        self.name_ = name_
+        self.name = name
 
 class Category():
-    def __init__(self, ID, name_, supercategory_id):
+    def __init__(self, ID, name, supercategory_id):
         self.ID = ID
-        self.name_ = name_
+        self.name = name
         self.supercategory_id = supercategory_id
+        self.items = []
+        self.subcategories = []
 
 class Item():
-    def __init__(self, ID, name_, amount, resaleprice, category_id):
+    def __init__(self, ID, name, amount, resaleprice, category_id):
         self.ID = ID
-        self.name_ = name_
+        self.name = name
         self.amount = amount
         self.resaleprice = resaleprice
         self.category_id = category_id
@@ -150,8 +152,7 @@ def search_item_by_item(name):
     cur.execute(sql, (name))
     lstOfItems = cur.fetchall()
 
-    return map(lambda item:
-               Item(item[0], item[1], item[2], item[3], item[4]), lstOfItems)
+    return list(map(lambda item: Item(*item), lstOfItems))
 
 def search_item_by_supplier(name):
     cur = conn.cursor()
@@ -163,8 +164,7 @@ def search_item_by_supplier(name):
     cur.execute(sql, (name))
     lstOfItems = cur.fetchall()
 
-    return map(lambda item:
-               Item(item[0], item[1], item[2], item[3], item[4]), lstOfItems)
+    return list(map(lambda item: Item(*item), lstOfItems))
 
 def search_item_by_category(name):
     cur = conn.cursor()
@@ -185,8 +185,46 @@ def search_item_by_category(name):
     cur.execute(sql, (name))
     lstOfItems = cur.fetchall()
 
-    return map(lambda item:
-               Item(item[0], item[1], item[2], item[3], item[4]), lstOfItems)
+    return list(map(lambda item: Item(*item), lstOfItems))
 
 def search_item_by(name):
     return search_item_by_item(name) + search_item_by_supplier(name) + search_item_by_category(name)
+
+def find_all_items():
+    cur = conn.cursor()
+    sql = """
+    SELECT * FROM Item
+    """
+    cur.execute(sql,)
+    lstOfItems = cur.fetchall()
+
+    return list(map(lambda item: Item(*item), lstOfItems))
+
+def find_all_categories():
+    cur = conn.cursor()
+    sql = """
+    SELECT * FROM Category
+    """
+    cur.execute(sql,)
+    lstOfCategories = cur.fetchall()
+
+    return list(map(lambda category: Category(*category), lstOfCategories))
+
+def find_all_items_by_category():
+    items = find_all_items()
+    categories = find_all_categories()
+    root_categories = []
+
+    for category in categories:
+        if category.supercategory_id == None:
+            root_categories += [category]
+        else:
+            for category_ in categories:
+                if category.supercategory_id == category_.ID:
+                    category_.subcategories += [category]
+        
+        for item in items:
+            if item.category_id == category.ID:
+                category.items += [item]
+    
+    return root_categories
