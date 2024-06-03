@@ -6,7 +6,6 @@ from psycopg2 import sql
 
 @login_manager.user_loader
 def load_user(user_id):
-    print(user_id)
     user = Users(user_id, "HELLO")
     if user_id != -1:
         user.active = True
