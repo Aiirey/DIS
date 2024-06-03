@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS Delivers(
 	supplier_id integer,
 	item_id integer,
 	supplierprice integer,
-	CONSTRAINT delivers_key PRIMARY KEY (supplier_id, item_id),
+	CONSTRAINT ID PRIMARY KEY (supplier_id, item_id),
 	FOREIGN KEY (supplier_id) REFERENCES Supplier(ID),
 	FOREIGN KEY (item_id) REFERENCES Item(ID)
 );
@@ -39,9 +39,9 @@ CREATE TABLE IF NOT EXISTS Delivers(
 CREATE TABLE IF NOT EXISTS Updates(
 	user_id integer,
 	item_id integer,
-	timestamp_ TIMESTAMP, -- TODO: hvad fuck er et timestamp??
 	change integer,
-	CONSTRAINT updates_key PRIMARY KEY (user_id, item_id),
+	timestamp_ TIMESTAMP, -- TODO: hvad fuck er et timestamp??
+	CONSTRAINT ID PRIMARY KEY (user_id, item_id),
 	FOREIGN KEY (user_id) REFERENCES Users(ID),
 	FOREIGN KEY (item_id) REFERENCES Item(ID)
 );
