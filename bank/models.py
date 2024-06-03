@@ -170,24 +170,23 @@ def search_item_by_category(name):
     cur = conn.cursor()
     sql = """
     SELECT ID, name_, amount, resaleprice, category_id FROM Item
-        WHERE category_id IN (SELECT ID FROM Category WHERE name_ = %s)
+        WHERE category_id
+            IN (WITH RECURSIVE CTE_name AS
+                (
+                SELECT ID, supercategory_id FROM Category
+                WHERE name_ = 'Sukkerfri'
+                UNION ALL
+                SELECT c.ID, c.supercategory_id
+                FROM Category c
+                INNER JOIN CTE_name ON c.supercategory_id = CTE_name.ID
+                )
+                SELECT ID FROM CTE_name)
     """
     cur.execute(sql, (name))
     lstOfItems = cur.fetchall()
 
     return map(lambda item:
                Item(item[0], item[1], item[2], item[3], item[4]), lstOfItems)
-
-def search_item_by_inner_category_id(ID):
-    cur = conn.cursor()
-    sql = """
-    WITH CTE_name AS
-    (
-    SELECT ID, supercategory_id FROM Category
-    WHERE supercategory_id = %s
-    )
-    SELECT * FROM CTE_name
-    """
 
 def search_item_by(name):
     return search_item_by_item(name) + search_item_by_supplier(name) + search_item_by_category(name)
