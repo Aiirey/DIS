@@ -7,6 +7,8 @@ from psycopg2 import sql
 @login_manager.user_loader
 def load_user(username):
     user = create_user(username)
+    if user is None:
+        return None
     user.active = True
     return user
 
