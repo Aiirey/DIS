@@ -13,5 +13,5 @@ def index():
     form = SearchForm()
     if form.validate_on_submit():
         search = form.search.data
-        warehouse = find_items_by_category(search_item_by(search))
+        warehouse = find_items_by_category(search_item_by_any(search))
     return render_template('warehouse.html', title='Warehouse', warehouse=warehouse, form=form)

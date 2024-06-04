@@ -127,29 +127,42 @@ def insert_updates(user_id, item_id, change, timestamp_):
 def create_user(name):
     cur = conn.cursor()
     sql = """
-    SELECT ID, password_ FROM Users WHERE name_ = %s
+    SELECT ID, name_, password_ FROM Users WHERE name_ = %s
     """
     cur.execute(sql, (name,))
-    sql_result = cur.fetchone()
+    potential_user = cur.fetchone()
     cur.close()
-    print(sql_result)
-    if sql_result == None:
-        return sql_result
+    print(potential_user)
+    if potential_user == None:
+        return potential_user
     else:
-        return Users(sql_result[0], name, sql_result[1])
+        return Users(*potential_user)
 
 def create_supplier(name):
     cur = conn.cursor()
     sql = """
-    SELECT ID FROM Supplier WHERE name_ = %s
+    SELECT ID, name_ FROM Supplier WHERE name_ = %s
     """
     cur.execute(sql, (name,))
-    sql_result = cur.fetchone()
+    potential_supplier = cur.fetchone()
     cur.close()
-    if sql_result == None:
-        return sql_result
+    if potential_supplier == None:
+        return potential_supplier
     else:
-        return Supplier(sql_result[0], name)
+        return Supplier(*potential_supplier)
+
+def create_category(id):
+    cur = conn.cursor()
+    sql = """
+    SELECT ID, name_, supercategory_id FROM Category WHERE ID = %s
+    """
+    cur.execute(sql, (id,))
+    potential_category = cur.fetchone()
+    cur.close()
+    if potential_category == None:
+        return potential_category
+    else:
+        return Category(*potential_category)
 
 def update_item(name, amount):
     cur = conn.cursor()
@@ -166,10 +179,10 @@ def search_item_by_item(name):
         WHERE name_ = %s
     """
     cur.execute(sql, (name,))
-    lstOfItems = cur.fetchall()
+    items = cur.fetchall()
     cur.close()
 
-    return list(map(lambda item: Item(*item), lstOfItems))
+    return list(map(lambda item: Item(*item), items))
 
 def search_item_by_supplier(name):
     cur = conn.cursor()
@@ -179,10 +192,10 @@ def search_item_by_supplier(name):
                         WHERE supplier_id IN (SELECT ID from Supplier WHERE name_ = %s))
     """
     cur.execute(sql, (name,))
-    lstOfItems = cur.fetchall()
+    items = cur.fetchall()
     cur.close()
 
-    return list(map(lambda item: Item(*item), lstOfItems))
+    return list(map(lambda item: Item(*item), items))
 
 def search_item_by_category(name):
     cur = conn.cursor()
@@ -201,12 +214,12 @@ def search_item_by_category(name):
                 SELECT ID FROM CTE_name)
     """
     cur.execute(sql, (name,))
-    lstOfItems = cur.fetchall()
+    items = cur.fetchall()
     cur.close()
 
-    return list(map(lambda item: Item(*item), lstOfItems))
+    return list(map(lambda item: Item(*item), items))
 
-def search_item_by(name):
+def search_item_by_any(name):
     return search_item_by_item(name) + search_item_by_supplier(name) + search_item_by_category(name)
 
 def find_all_items():
@@ -250,19 +263,6 @@ def find_all_items_by_category():
     
     return root_categories
 
-def find_category_by_ID(id):
-    cur = conn.cursor()
-    sql = """
-    SELECT ID, name_, supercategory_id FROM Category WHERE ID = %s
-    """
-    cur.execute(sql, (id,))
-    potential_category = cur.fetchone()
-    cur.close()
-    if potential_category == None:
-        return potential_category
-    else:
-        return Category(*potential_category)
-
 def find_items_by_category(items):
     categories = []
     category_ids = []
@@ -270,10 +270,9 @@ def find_items_by_category(items):
 
     for item in items:
         if item.category_id not in category_ids:
-            categories += [find_category_by_ID(item.category_id)]
+            categories += [create_category(item.category_id)]
             category_ids += [item.category_id]
     
-    # TODO: HERRRRR, lav ny category lioste d fra item liste
     for category in categories:
         if category.supercategory_id not in category_ids:
             # if category not in root_categories:
