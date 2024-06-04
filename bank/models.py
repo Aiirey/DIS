@@ -5,40 +5,25 @@ from psycopg2 import sql
 
 
 @login_manager.user_loader
-def load_user(user_id):
-    user = Users(user_id, "HELLO")
-    if user_id != -1:
-        user.active = True
+def load_user(username):
+    user = create_user(username)
+    user.active = True
     return user
-
-    # TODO: Fix
-    cur = conn.cursor()
-
-    schema = 'customers'
-    id = 'cpr_number'
-    if str(user_id).startswith('60'):
-        schema = 'employees'
-        id = 'id'
-
-    user_sql = sql.SQL("""
-    SELECT * FROM {}
-    WHERE {} = %s
-    """).format(sql.Identifier(schema),  sql.Identifier(id))
-
-    cur.execute(user_sql, (int(user_id),))
-    if cur.rowcount > 0:
-        return None
 
 
 class Users(UserMixin):
-    def __init__(self, ID, name):
+    def __init__(self, ID, name, password):
         self.id = ID
         self.name = name
+        self.password = password
         self.active = False
 
     @property
     def is_active(self):
         return self.active
+
+    def get_id(self):
+        return self.name
 
 
 class Supplier():
@@ -111,14 +96,16 @@ def insert_updates(user_id, item_id, change, timestamp_):
 def create_user(name):
     cur = conn.cursor()
     sql = """
-    SELECT ID FROM Users WHERE name_ = %s
+    SELECT ID, password_ FROM Users WHERE name_ = %s
     """
-    cur.execute(sql, (name))
-    ID = cur.fetchone()[0]
-    conn.commit()
+    cur.execute(sql, (name,))
+    sql_result = cur.fetchone()
     cur.close()
-    
-    return Users(ID, name)
+    print(sql_result)
+    if sql_result == None:
+        return sql_result
+    else:
+        return Users(sql_result[0], name, sql_result[1])
 
 def create_supplier(name):
     cur = conn.cursor()

@@ -7,6 +7,8 @@ DELETE FROM Supplier;
 DELETE FROM Item;
 DELETE FROM Category;
 
+INSERT INTO Users (name_, password_) VALUES ('4243', '$2y$10$Rcwc60GjOCUpbRBASQBsq.v8BFXysvMfb1.aCqcpnmBX145lY3uBi');
+
 INSERT INTO Category (name_) VALUES ('Væske');
 INSERT INTO Category (name_, supercategory_id) VALUES ('Sodavand', 1);
 INSERT INTO Category (name_, supercategory_id) VALUES ('Alkohol', 1);
@@ -19,4 +21,3 @@ INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Coca Cola', 
 INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Fanta', 20, 10, 2);
 INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Cola Zero', 20, 10, 4);
 INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Fanta Zero', 20, 10, 4);
-

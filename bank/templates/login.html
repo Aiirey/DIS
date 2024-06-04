@@ -35,5 +35,16 @@
         <div class="col-auto">
             {{ form.submit(class="btn btn-primary mb-3") }}
         </div>
+        {% with flashes = get_flashed_messages() %}
+            {% if flashes %}
+                <div>
+                    {% for flash in flashes %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ flash }}
+                    </span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
     </form>
 {% endblock content %}

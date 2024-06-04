@@ -21,7 +21,7 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 login_manager.login_message_category = 'info'
 
-session = {"id": 0}
+session = {"id": -1}
 
 from bank.Login.routes import Login
 from bank.Warehouse.routes import Warehouse
