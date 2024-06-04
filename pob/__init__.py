@@ -23,8 +23,6 @@ login_manager.login_message_category = 'info'
 
 session = {"id": -1}
 
-from pob.Login.routes import Login
-from pob.Warehouse.routes import Warehouse
+from pob.routes import Pob
 
-app.register_blueprint(Login)
-app.register_blueprint(Warehouse)
+app.register_blueprint(Pob)
