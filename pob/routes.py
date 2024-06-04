@@ -38,9 +38,8 @@ def logout():
 
 
 @Pob.route("/", methods=['GET', 'POST'])
+@login_required
 def warehouse():
-    if not current_user.is_authenticated:
-        return redirect(url_for('Pob.login'))
     warehouse = find_all_items_by_category()
     form = SearchForm()
     if form.validate_on_submit():
