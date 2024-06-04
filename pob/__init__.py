@@ -2,15 +2,18 @@ import psycopg2
 from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
-import db
 
 
 app = Flask(__name__)
-
 app.config['SECRET_KEY'] = 'fc089b9218301ad987914c53481bff04'
 
-# set your own database
-#db = "dbname='pob' user='postgres' host='127.0.0.1' password = 'UIS'"
+try:
+    import db
+except ModuleNotFoundError:
+    print("Error: Set up database connection in db.py file.")
+    with open("db.py", "w") as f:
+        f.write("db = \"dbname='pob' user='postgres' password = 'UIS'\"\n")
+    import db
 conn = psycopg2.connect(db.db)
 
 bcrypt = Bcrypt(app)
