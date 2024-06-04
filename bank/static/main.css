@@ -1,3 +1,9 @@
+@media (min-width: 768px) {
+    .container-xs {
+        max-width: 700px;
+    }
+}
+
 body {
     background: pink;
 }
