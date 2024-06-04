@@ -4,7 +4,7 @@ from wtforms import Form
 from wtforms.validators import DataRequired, Length, EqualTo, ValidationError
 
 class LoginForm(FlaskForm):
-    username = StringField('Brugernavn', validatorsses=[DataRequired()])
+    username = StringField('Brugernavn', validators=[DataRequired()])
     password = PasswordField('Kodeord', validators=[DataRequired()])
     remember = BooleanField('Husk mig')
     submit = SubmitField('Log ind')
