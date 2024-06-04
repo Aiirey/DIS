@@ -1,9 +1,8 @@
-from flask import render_template, url_for, flash, redirect, request, Blueprint
-from pob import app, conn, bcrypt
+from flask import render_template, url_for, flash, redirect, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
-from pob import session
-from pob.models import *
+from pob import bcrypt, session
 from pob.forms import *
+from pob.models import *
 
 
 Pob = Blueprint('Pob', __name__)
@@ -33,7 +32,7 @@ def login():
 
 @Pob.route("/logout")
 def logout():
-    session["id"]=-1
+    session["id"] = -1
     logout_user()
     return redirect(url_for('Pob.login'))
 

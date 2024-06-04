@@ -1,10 +1,8 @@
-from pob import user
-from flask import Flask
 import psycopg2
+from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
-
-# TODO: Clean up all imports in all file
+from pob import user
 
 
 app = Flask(__name__)
@@ -24,5 +22,4 @@ login_manager.login_message_category = 'info'
 session = {"id": -1}
 
 from pob.routes import Pob
-
 app.register_blueprint(Pob)

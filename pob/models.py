@@ -1,7 +1,5 @@
-from datetime import datetime
-from pob import conn, login_manager
 from flask_login import UserMixin
-from psycopg2 import sql
+from pob import conn, login_manager
 
 
 @login_manager.user_loader
@@ -11,6 +9,7 @@ def load_user(username):
         return None
     user.active = True
     return user
+
 
 class Users(UserMixin):
     def __init__(self, ID, name, password):
@@ -26,10 +25,12 @@ class Users(UserMixin):
     def get_id(self):
         return self.name
 
+
 class Supplier():
     def __init__(self, ID, name):
         self.ID = ID
         self.name = name
+
 
 class Category():
     def __init__(self, ID, name, supercategory_id):
@@ -39,6 +40,7 @@ class Category():
         self.items = []
         self.subcategories = []
 
+
 class Item():
     def __init__(self, ID, name, amount, resaleprice, category_id):
         self.ID = ID
@@ -47,12 +49,14 @@ class Item():
         self.resaleprice = resaleprice
         self.category_id = category_id
 
+
 class Delivers():
     def __init__(self, supplier_id, item_id, supplierprice):
         self.ID = ()
         self.supplier_id = supplier_id
         self.item_id = item_id
         self.supplierprice = supplierprice
+
 
 class Updates():
     def __init__(self, user_id, item_id, change, timestamp):
@@ -63,6 +67,8 @@ class Updates():
         self.timestamp = timestamp
 
 # TODO: Make functions for all SQL operations.
+
+
 def insert_user(name, password):
     cur = conn.cursor()
     sql = """
@@ -71,6 +77,7 @@ def insert_user(name, password):
     """
     cur.execute(sql, (name, password))
     conn.commit()
+
 
 def insert_supplier(name):
     cur = conn.cursor()
@@ -81,7 +88,8 @@ def insert_supplier(name):
     cur.execute(sql, (name,))
     conn.commit()
 
-def insert_category(name, supercategory_id = None):
+
+def insert_category(name, supercategory_id=None):
     cur = conn.cursor()
     if supercategory_id == None:
         sql = """
@@ -97,6 +105,7 @@ def insert_category(name, supercategory_id = None):
         cur.execute(sql, (name, supercategory_id))
     conn.commit()
 
+
 def insert_item(name, resaleprice, category_id):
     cur = conn.cursor()
     sql = """
@@ -105,6 +114,7 @@ def insert_item(name, resaleprice, category_id):
     """
     cur.execute(sql, (name, resaleprice, category_id))
     conn.commit()
+
 
 def insert_delivers(supplier_id, item_id, supplierprice):
     cur = conn.cursor()
@@ -115,6 +125,7 @@ def insert_delivers(supplier_id, item_id, supplierprice):
     cur.execute(sql, (supplier_id, item_id, supplierprice))
     conn.commit()
 
+
 def insert_updates(user_id, item_id, change, timestamp_):
     cur = conn.cursor()
     sql = """
@@ -123,6 +134,7 @@ def insert_updates(user_id, item_id, change, timestamp_):
     """
     cur.execute(sql, (user_id, item_id, change, timestamp_))
     conn.commit()
+
 
 def create_user(name):
     cur = conn.cursor()
@@ -138,6 +150,7 @@ def create_user(name):
     else:
         return Users(*potential_user)
 
+
 def create_supplier(name):
     cur = conn.cursor()
     sql = """
@@ -150,6 +163,7 @@ def create_supplier(name):
         return potential_supplier
     else:
         return Supplier(*potential_supplier)
+
 
 def create_category(id):
     cur = conn.cursor()
@@ -164,6 +178,7 @@ def create_category(id):
     else:
         return Category(*potential_category)
 
+
 def update_item(name, amount):
     cur = conn.cursor()
     sql = """
@@ -171,6 +186,7 @@ def update_item(name, amount):
     """
     cur.execute(sql, (amount, name))
     conn.commit()
+
 
 def search_item_by_item(name):
     cur = conn.cursor()
@@ -184,6 +200,7 @@ def search_item_by_item(name):
 
     return list(map(lambda item: Item(*item), items))
 
+
 def search_item_by_supplier(name):
     cur = conn.cursor()
     sql = """
@@ -196,6 +213,7 @@ def search_item_by_supplier(name):
     cur.close()
 
     return list(map(lambda item: Item(*item), items))
+
 
 def search_item_by_category(name):
     cur = conn.cursor()
@@ -219,8 +237,10 @@ def search_item_by_category(name):
 
     return list(map(lambda item: Item(*item), items))
 
+
 def search_item_by_any(name):
     return search_item_by_item(name) + search_item_by_supplier(name) + search_item_by_category(name)
+
 
 def find_all_items():
     cur = conn.cursor()
@@ -233,6 +253,7 @@ def find_all_items():
 
     return list(map(lambda item: Item(*item), lstOfItems))
 
+
 def find_all_categories():
     cur = conn.cursor()
     sql = """
@@ -243,6 +264,7 @@ def find_all_categories():
     cur.close()
 
     return list(map(lambda category: Category(*category), lstOfCategories))
+
 
 def find_all_items_by_category():
     items = find_all_items()
@@ -256,16 +278,17 @@ def find_all_items_by_category():
             for category_ in categories:
                 if category.supercategory_id == category_.ID:
                     category_.subcategories += [category]
-        
+
         for item in items:
             if item.category_id == category.ID:
                 category.items += [item]
-    
+
     return root_categories
+
 
 def find_items_by_category(items):
     if items == []:
-        find_all_items_by_category() #maybe??
+        find_all_items_by_category() # maybe??
     categories = []
     category_ids = []
     root_categories = []
@@ -274,17 +297,17 @@ def find_items_by_category(items):
         if item.category_id not in category_ids:
             categories += [create_category(item.category_id)]
             category_ids += [item.category_id]
-    
+
     for category in categories:
         if category.supercategory_id not in category_ids:
-                root_categories += [category]
+            root_categories += [category]
         else:
             for category_ in categories:
                 if category.supercategory_id == category_.ID:
                     category_.subcategories += [category]
-        
+
         for item in items:
             if item.category_id == category.ID:
                 category.items += [item]
-    
+
     return root_categories
