@@ -12,7 +12,6 @@ def load_user(username):
     user.active = True
     return user
 
-
 class Users(UserMixin):
     def __init__(self, ID, name, password):
         self.id = ID
@@ -26,7 +25,6 @@ class Users(UserMixin):
 
     def get_id(self):
         return self.name
-
 
 class Supplier():
     def __init__(self, ID, name):
@@ -73,17 +71,49 @@ def insert_user(name, password):
     """
     cur.execute(sql, (name, password))
     conn.commit()
-    cur.close()
 
 def insert_supplier(name):
     cur = conn.cursor()
     sql = """
-    INSERT INTO Supplier(name)
+    INSERT INTO Supplier(name_)
     VALUES (%s)
     """
-    cur.execute(sql, (name))
+    cur.execute(sql, (name,))
     conn.commit()
-    cur.close()
+
+def insert_category(name, supercategory_id = None):
+    cur = conn.cursor()
+    if supercategory_id == None:
+        sql = """
+        INSERT INTO Supplier(name_)
+        VALUES (%s)
+        """
+        cur.execute(sql, (name,))
+    else:
+        sql = """
+        INSERT INTO Supplier(name_, supercategory_id)
+        VALUES (%s, %s)
+        """
+        cur.execute(sql, (name, supercategory_id))
+    conn.commit()
+
+def insert_item(name, resaleprice, category_id):
+    cur = conn.cursor()
+    sql = """
+    INSERT INTO Item(name_, resaleprice, category_id)
+    VALUES (%s, %s, %s)
+    """
+    cur.execute(sql, (name, resaleprice, category_id))
+    conn.commit()
+
+def insert_delivers(supplier_id, item_id, supplierprice):
+    cur = conn.cursor()
+    sql = """
+    INSERT INTO Delivers(supplier_id, item_id, supplierprice)
+    VALUES (%s, %s, %s)
+    """
+    cur.execute(sql, (supplier_id, item_id, supplierprice))
+    conn.commit()
 
 def insert_updates(user_id, item_id, change, timestamp_):
     cur = conn.cursor()
@@ -93,7 +123,6 @@ def insert_updates(user_id, item_id, change, timestamp_):
     """
     cur.execute(sql, (user_id, item_id, change, timestamp_))
     conn.commit()
-    cur.close()
 
 def create_user(name):
     cur = conn.cursor()
