@@ -1,9 +1,24 @@
 {% extends "layout.html" %}
 {% block content %}
     {% if current_user.is_authenticated %}
-        <form class="d-flex" role="search">
-            <input class="form-control me-2 search-bar" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-search" type="submit">Search</button>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <div class="col-auto">
+                {{ form.search.label(class="form-label") }}
+                {% if form.search.errors %}
+                {{ form.search(class="form-control form-control-lg is-invalid") }}
+                <div>
+                    {% for error in form.username.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.search(class="form-control form-control-lg") }}
+            {% endif %}
+            </div>
+            <div class="col-auto">
+                {{ form.submit(class="btn btn-primary mb-3") }}
+            </div>
         </form>
     {% endif %}
     <h2>Oversigt over lager</h2>

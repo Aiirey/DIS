@@ -174,7 +174,7 @@ def search_item_by_category(name):
             IN (WITH RECURSIVE CTE_name AS
                 (
                 SELECT ID, supercategory_id FROM Category
-                WHERE name_ = 'Sukkerfri'
+                WHERE name_ = %s
                 UNION ALL
                 SELECT c.ID, c.supercategory_id
                 FROM Category c
@@ -230,4 +230,45 @@ def find_all_items_by_category():
             if item.category_id == category.ID:
                 category.items += [item]
     
+    return root_categories
+
+def find_category_by_ID(id):
+    cur = conn.cursor()
+    sql = """
+    SELECT ID, name_, supercategory_id FROM Category WHERE ID = %s
+    """
+    cur.execute(sql, (id,))
+    potential_category = cur.fetchone()
+    cur.close()
+    if potential_category == None:
+        return potential_category
+    else:
+        return Category(*potential_category)
+
+def find_items_by_category(items):
+    categories = []
+    category_ids = []
+    root_categories = []
+
+    for item in items:
+        if item.category_id not in category_ids:
+            categories += [find_category_by_ID(item.category_id)]
+            category_ids += [item.category_id]
+    
+    # TODO: HERRRRR, lav ny category lioste d fra item liste
+    for category in categories:
+        if category.supercategory_id not in category_ids:
+            # if category not in root_categories:
+                root_categories += [category]
+        else:
+            for category_ in categories:
+                if category.supercategory_id == category_.ID:
+                    category_.subcategories += [category]
+        
+        for item in items:
+            if item.category_id == category.ID:
+                category.items += [item]
+    
+    for c in root_categories:
+        print(c.ID)
     return root_categories
