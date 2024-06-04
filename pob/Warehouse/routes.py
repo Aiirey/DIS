@@ -1,7 +1,7 @@
 from flask import render_template, url_for, redirect, Blueprint
 from flask_login import current_user
-from bank.models import *
-from bank.forms import *
+from pob.models import *
+from pob.forms import *
 
 Warehouse = Blueprint('Warehouse', __name__)
 

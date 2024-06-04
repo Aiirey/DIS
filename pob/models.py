@@ -1,5 +1,5 @@
 from datetime import datetime
-from bank import conn, login_manager
+from pob import conn, login_manager
 from flask_login import UserMixin
 from psycopg2 import sql
 
