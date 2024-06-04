@@ -5,12 +5,9 @@ Run the code below to install the necessary modules.
 
     pip install -r requirements.txt
 
-#### notes. When solving codepage problems 
-For WINDOWS: Loading data into postgres using psql needs a codepage set. Invoking a cmd shell like this set the codepage: 
+For WINDOWS: Loading data into Postgres using psql needs to explicitly use UTF-8 by executing this command:
 
-    cmd /c chcp 65001   
-
-This makes a subshell with the codepage set to UTF8. 'cmd /c chcp 1252' makes a subshell with the codepage set to 1252. The requirements may have to be run again in the subshell. And you might also have to run the requirements again when invoking a virtual environment (see below). 
+    set PGCLIENTENCODING=UTF8
 
 ## Database init
 1. set the database in __init__.py file.
