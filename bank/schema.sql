@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS Category(
 CREATE TABLE IF NOT EXISTS Item(
 	ID serial PRIMARY KEY,
 	name_ varchar(100) UNIQUE,
-	amount integer,
+	amount integer DEFAULT 0,
 	resaleprice integer,
 	category_id integer NOT NULL,
 	FOREIGN KEY (category_id) REFERENCES Category(ID)
