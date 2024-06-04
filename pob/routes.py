@@ -1,6 +1,6 @@
 from flask import render_template, url_for, flash, redirect, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
-from pob import bcrypt, session
+from pob import bcrypt
 from pob.forms import *
 from pob.models import *
 
@@ -14,14 +14,10 @@ def login():
         return redirect(url_for('Pob.warehouse'))
 
     form = LoginForm()
-
     if form.validate_on_submit():
         user = create_user(form.username.data)
-
         if user is not None and bcrypt.check_password_hash(user.password, form.password.data):
             user.active = True
-            session["id"] = form.username.data
-
             login_user(user, remember=form.remember.data)
             return redirect(url_for('Pob.warehouse'))
         else:
@@ -32,7 +28,6 @@ def login():
 
 @Pob.route("/logout")
 def logout():
-    session["id"] = -1
     logout_user()
     return redirect(url_for('Pob.login'))
 

@@ -18,7 +18,5 @@ bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'Pob.login'
 
-session = {"id": -1}
-
 from pob.routes import Pob
 app.register_blueprint(Pob)
