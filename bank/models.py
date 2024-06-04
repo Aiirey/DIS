@@ -176,7 +176,7 @@ def search_item_by_item(name):
     cur = conn.cursor()
     sql = """
     SELECT ID, name_, amount, resaleprice, category_id FROM Item
-        WHERE name_ = %s
+        WHERE name_ = %s ORDER BY name_
     """
     cur.execute(sql, (name,))
     items = cur.fetchall()
@@ -189,7 +189,7 @@ def search_item_by_supplier(name):
     sql = """
     SELECT ID, name_, amount, resaleprice, category_id FROM Item
         WHERE ID IN (SELECT item_id FROM Delivers
-                        WHERE supplier_id IN (SELECT ID from Supplier WHERE name_ = %s))
+                        WHERE supplier_id IN (SELECT ID from Supplier WHERE name_ = %s)) ORDER BY name_
     """
     cur.execute(sql, (name,))
     items = cur.fetchall()
@@ -211,7 +211,7 @@ def search_item_by_category(name):
                 FROM Category c
                 INNER JOIN CTE_name ON c.supercategory_id = CTE_name.ID
                 )
-                SELECT ID FROM CTE_name)
+                SELECT ID FROM CTE_name) ORDER BY name_
     """
     cur.execute(sql, (name,))
     items = cur.fetchall()
@@ -225,7 +225,7 @@ def search_item_by_any(name):
 def find_all_items():
     cur = conn.cursor()
     sql = """
-    SELECT * FROM Item
+    SELECT * FROM Item ORDER BY name_
     """
     cur.execute(sql)
     lstOfItems = cur.fetchall()
@@ -236,7 +236,7 @@ def find_all_items():
 def find_all_categories():
     cur = conn.cursor()
     sql = """
-    SELECT * FROM Category
+    SELECT * FROM Category ORDER BY name_
     """
     cur.execute(sql)
     lstOfCategories = cur.fetchall()
