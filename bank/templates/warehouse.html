@@ -1,6 +1,5 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1>{{ current_user.name_ }}</h1>
     {% if current_user.is_authenticated %}
         <form class="d-flex" role="search">
             <input class="form-control me-2 search-bar" type="search" placeholder="Search" aria-label="Search">
@@ -16,7 +15,7 @@
                     {% for item in root_category.items %}
                         <li>{{ item.name}} {{ item.amount }}</li>
                     {% endfor %}
-            {% endif %}
+                {% endif %}
             {% if root_category.subcategories %}
                 {{ loop(root_category.subcategories)}}
             {% endif %}</ul></li>
