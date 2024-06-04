@@ -110,7 +110,7 @@ def insert_updates(user_id, item_id, change, timestamp_):
 
 def create_user(name):
     cur = conn.cursor()
-    sql = """"
+    sql = """
     SELECT ID FROM Users WHERE name_ = %s
     """
     cur.execute(sql, (name))
@@ -122,7 +122,7 @@ def create_user(name):
 
 def create_supplier(name):
     cur = conn.cursor()
-    sql = """"
+    sql = """
     SELECT ID FROM Supplier WHERE name_ = %s
     """
     cur.execute(sql, (name,))
@@ -135,7 +135,7 @@ def create_supplier(name):
 
 def update_item(name, amount):
     cur = conn.cursor()
-    sql = """"
+    sql = """
     UPDATE Item SET amount = amount + %i WHERE name_ = %s
     """
     cur.execute(sql, (amount, name))
