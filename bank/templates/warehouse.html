@@ -28,7 +28,10 @@
             <ul>
                 {% if root_category.items %}
                     {% for item in root_category.items %}
-                        <li>{{ item.name}} {{ item.amount }}</li>
+                        <li>
+                            <span>{{ item.name }}</span>
+                            <span class="float-end">{{ item.amount }}</span>
+                        </li>
                     {% endfor %}
                 {% endif %}
             {% if root_category.subcategories %}
