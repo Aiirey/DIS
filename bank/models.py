@@ -264,6 +264,8 @@ def find_all_items_by_category():
     return root_categories
 
 def find_items_by_category(items):
+    if items == []:
+        find_all_items_by_category() #maybe??
     categories = []
     category_ids = []
     root_categories = []
