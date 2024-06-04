@@ -275,7 +275,6 @@ def find_items_by_category(items):
     
     for category in categories:
         if category.supercategory_id not in category_ids:
-            # if category not in root_categories:
                 root_categories += [category]
         else:
             for category_ in categories:
@@ -286,6 +285,4 @@ def find_items_by_category(items):
             if item.category_id == category.ID:
                 category.items += [item]
     
-    for c in root_categories:
-        print(c.ID)
     return root_categories
