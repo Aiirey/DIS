@@ -125,12 +125,13 @@ def create_supplier(name):
     sql = """"
     SELECT ID FROM Supplier WHERE name_ = %s
     """
-    cur.execute(sql, (name))
-    ID = cur.fetchone()[0]
-    conn.commit()
+    cur.execute(sql, (name,))
+    sql_result = cur.fetchone()
     cur.close()
-    
-    return Supplier(ID, name)
+    if sql_result == None:
+        return sql_result
+    else:
+        return Supplier(sql_result[0], name)
 
 def update_item(name, amount):
     cur = conn.cursor()
@@ -138,9 +139,7 @@ def update_item(name, amount):
     UPDATE Item SET amount = amount + %i WHERE name_ = %s
     """
     cur.execute(sql, (amount, name))
-    ID = cur.fetchone()[0]
     conn.commit()
-    cur.close()
 
 def search_item_by_item(name):
     cur = conn.cursor()
@@ -148,8 +147,9 @@ def search_item_by_item(name):
     SELECT ID, name_, amount, resaleprice, category_id FROM Item
         WHERE name_ = %s
     """
-    cur.execute(sql, (name))
+    cur.execute(sql, (name,))
     lstOfItems = cur.fetchall()
+    cur.close()
 
     return list(map(lambda item: Item(*item), lstOfItems))
 
@@ -160,8 +160,9 @@ def search_item_by_supplier(name):
         WHERE ID IN (SELECT item_id FROM Delivers
                         WHERE supplier_id IN (SELECT ID from Supplier WHERE name_ = %s))
     """
-    cur.execute(sql, (name))
+    cur.execute(sql, (name,))
     lstOfItems = cur.fetchall()
+    cur.close()
 
     return list(map(lambda item: Item(*item), lstOfItems))
 
@@ -181,8 +182,9 @@ def search_item_by_category(name):
                 )
                 SELECT ID FROM CTE_name)
     """
-    cur.execute(sql, (name))
+    cur.execute(sql, (name,))
     lstOfItems = cur.fetchall()
+    cur.close()
 
     return list(map(lambda item: Item(*item), lstOfItems))
 
@@ -194,8 +196,9 @@ def find_all_items():
     sql = """
     SELECT * FROM Item
     """
-    cur.execute(sql,)
+    cur.execute(sql)
     lstOfItems = cur.fetchall()
+    cur.close()
 
     return list(map(lambda item: Item(*item), lstOfItems))
 
@@ -204,8 +207,9 @@ def find_all_categories():
     sql = """
     SELECT * FROM Category
     """
-    cur.execute(sql,)
+    cur.execute(sql)
     lstOfCategories = cur.fetchall()
+    cur.close()
 
     return list(map(lambda category: Category(*category), lstOfCategories))
 

@@ -3,7 +3,11 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField, Integ
 from wtforms.validators import DataRequired, Length, EqualTo, ValidationError
 
 class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    remember = BooleanField('Remember Me')
-    submit = SubmitField('Login')
+    username = StringField('Brugernavn', validators=[DataRequired()])
+    password = PasswordField('Kodeord', validators=[DataRequired()])
+    remember = BooleanField('Husk mig')
+    submit = SubmitField('Log ind')
+
+class SearchForm(FlaskForm):
+    search = StringField('Indtast produktnavn, kategori eller leverandør...', validators=[DataRequired()])
+    search_button = StringField('Søg', validators=[DataRequired()])
