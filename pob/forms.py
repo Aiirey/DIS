@@ -11,5 +11,5 @@ class LoginForm(FlaskForm):
 
 
 class SearchForm(FlaskForm):
-    search = StringField('Indtast produktnavn, kategori eller leverandør...', validators=[DataRequired()])
+    search = StringField('Indtast produktnavn, kategori eller leverandør...')
     submit = SubmitField('Søg')

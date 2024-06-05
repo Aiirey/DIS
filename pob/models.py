@@ -288,7 +288,7 @@ def find_all_items_by_category():
 
 def find_items_by_category(items):
     if items == []:
-        find_all_items_by_category() # maybe??
+        return find_all_items_by_category()
     categories = []
     category_ids = []
     root_categories = []
