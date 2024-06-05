@@ -1,0 +1,29 @@
+<h2>Oversigt over lager</h2>
+<form method="POST">
+    {{ update_form.hidden_tag() }}
+<div class="col-auto">
+    {{ update_form.submit_update(class="btn btn-primary mb-3") }}
+</div>
+<ul>
+    {% for root_category in categories recursive %}
+        <li>
+            <span class="category">{{ root_category.name }}</span>
+            <ul>
+                {% if root_category.items %}
+                    {% for item in root_category.items %}
+                        <li>
+                            <span>{{ item.name }}</span>
+                            <div class="col-auto">
+                                <input name="changes-{{item.ID}}-change">
+                            </div>
+                        </li>
+                    {% endfor %}
+                {% endif %}
+                {% if root_category.subcategories %}
+                    {{ loop(root_category.subcategories)}}
+                {% endif %}
+            </ul>
+        </li>
+    {% endfor %}
+</ul>
+</form>

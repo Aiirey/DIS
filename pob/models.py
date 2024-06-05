@@ -144,7 +144,6 @@ def create_user(name):
     cur.execute(sql, (name,))
     potential_user = cur.fetchone()
     cur.close()
-    print(potential_user)
     if potential_user == None:
         return potential_user
     else:
@@ -191,25 +190,26 @@ def create_item(name):
     else:
         return Item(*potential_item)
 
-def update_item(name, amount):
+def update_item(id, amount):
     cur = conn.cursor()
     sql = """
-    UPDATE Item SET amount = amount + %s WHERE name_ = %s
+    UPDATE Item SET amount = amount + %s WHERE ID = %s
     """
-    cur.execute(sql, (amount, name))
+    cur.execute(sql, (amount, id))
     conn.commit()
 
-def user_updates_item(user_id, item_name, change):
-    item = create_item(item_name)
-    update_item(item_name, change)
+def user_updates_item(user_id, item_id, change):
+    if change == "":
+        return
+    update_item(item_id, change)
     
     cur = conn.cursor()
     sql = """
     INSERT INTO Updates (user_id, item_id, change, timestamp_)
-    VALUES (%s, %s, %s, %s, CURRENT_TIMESTAMP)
+    VALUES (%s, %s, %s, CURRENT_TIMESTAMP)
     """
 
-    cur.execute(sql, (user_id, item.ID, change))
+    cur.execute(sql, (user_id, item_id, change))
     conn.commit()
 
 def search_item_by_item(name):

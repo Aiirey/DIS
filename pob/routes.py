@@ -1,4 +1,4 @@
-from flask import render_template, url_for, flash, redirect, Blueprint
+from flask import render_template, url_for, flash, redirect, Blueprint, request
 from flask_login import login_user, current_user, logout_user, login_required
 from pob import bcrypt
 from pob.forms import *
@@ -32,17 +32,29 @@ def logout():
     return redirect(url_for('Pob.login'))
 
 
-def warehouse(title, subpage):
+def warehouse(title, subpage, **params):
     categories = find_all_items_by_category()
     form = SearchForm()
     if form.validate_on_submit():
         search = form.search.data
         categories = find_items_by_category(search_item_by_any(search))
     return render_template('warehouse.html', subpage=subpage, title=title,
-                           categories=categories, form=form)
+                           categories=categories, form=form, **params)
 
 
 @Pob.route("/", methods=['GET', 'POST'])
 @login_required
 def index():
     return warehouse('Warehouse', 'warehouse_index.html')
+
+@Pob.route("/update", methods=['GET', 'POST'])
+@login_required
+def update():
+    update_form = UpdateForm()
+    if request.method == 'POST' and "submit_update" in request.form:
+        for change in update_form.changes:
+            item_id = str.removeprefix(change.id, "changes-")
+            change_amount = change.data['change']
+            user_updates_item(current_user.id, item_id, change_amount)
+            return redirect(url_for('Pob.index'))
+    return warehouse('Warehouse', 'warehouse_update.html', update_form = update_form)
