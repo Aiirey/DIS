@@ -11,7 +11,7 @@ Pob = Blueprint('Pob', __name__)
 @Pob.route("/login", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('Pob.warehouse'))
+        return redirect(url_for('Pob.index'))
 
     form = LoginForm()
     if form.validate_on_submit():
@@ -19,7 +19,7 @@ def login():
         if user is not None and bcrypt.check_password_hash(user.password, form.password.data):
             user.active = True
             login_user(user, remember=form.remember.data)
-            return redirect(url_for('Pob.warehouse'))
+            return redirect(url_for('Pob.index'))
         else:
             flash('Forkert brugernavn og/eller password.', 'danger')
 
@@ -32,12 +32,17 @@ def logout():
     return redirect(url_for('Pob.login'))
 
 
-@Pob.route("/", methods=['GET', 'POST'])
-@login_required
-def warehouse():
-    warehouse = find_all_items_by_category()
+def warehouse(title, subpage):
+    categories = find_all_items_by_category()
     form = SearchForm()
     if form.validate_on_submit():
         search = form.search.data
-        warehouse = find_items_by_category(search_item_by_any(search))
-    return render_template('warehouse.html', title='Warehouse', warehouse=warehouse, form=form)
+        categories = find_items_by_category(search_item_by_any(search))
+    return render_template('warehouse.html', subpage=subpage, title=title,
+                           categories=categories, form=form)
+
+
+@Pob.route("/", methods=['GET', 'POST'])
+@login_required
+def index():
+    return warehouse('Warehouse', 'warehouse_index.html')

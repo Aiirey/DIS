@@ -1,0 +1,21 @@
+<h2>Oversigt over lager</h2>
+<ul>
+    {% for root_category in categories recursive %}
+        <li>
+            <span class="category">{{ root_category.name }}</span>
+            <ul>
+                {% if root_category.items %}
+                    {% for item in root_category.items %}
+                        <li>
+                            <span>{{ item.name }}</span>
+                            <span class="float-end">{{ item.amount }}</span>
+                        </li>
+                    {% endfor %}
+                {% endif %}
+                {% if root_category.subcategories %}
+                    {{ loop(root_category.subcategories)}}
+                {% endif %}
+            </ul>
+        </li>
+    {% endfor %}
+</ul>
