@@ -32,6 +32,23 @@ def logout():
     return redirect(url_for('Pob.login'))
 
 
+@Pob.route("/register", methods=['GET', 'POST'])
+def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('Pob.index'))
+
+    form = RegisterForm()
+    if form.validate_on_submit():
+        hash_ = bcrypt.generate_password_hash(
+            form.password.data).decode('utf-8')
+        insert_user(form.username.data, hash_)
+        user = load_user(form.username.data)
+        login_user(user)
+        return redirect(url_for('Pob.index'))
+
+    return render_template('register.html', title='Opret bruger', form=form)
+
+
 def warehouse(title, subpage, **params):
     categories = find_all_items_by_category()
     form = SearchForm()

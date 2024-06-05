@@ -10,6 +10,12 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Log ind')
 
 
+class RegisterForm(FlaskForm):
+    username = StringField('Brugernavn', validators=[DataRequired()])
+    password = PasswordField('Kodeord', validators=[DataRequired()])
+    submit = SubmitField('Opret bruger')
+
+
 class SearchForm(FlaskForm):
     search = StringField('Indtast produktnavn, kategori eller leverandør...')
     submit = SubmitField('Søg')
