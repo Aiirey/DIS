@@ -73,5 +73,5 @@ def update():
             item_id = str.removeprefix(change.id, "changes-")
             change_amount = change.data['change']
             user_updates_item(current_user.id, item_id, change_amount)
-            return redirect(url_for('Pob.index'))
+        return redirect(url_for('Pob.index'))
     return warehouse('Warehouse', 'warehouse_update.html', update_form = update_form)
