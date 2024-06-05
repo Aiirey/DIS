@@ -1,8 +1,10 @@
+
+<span class="float-end">TILFØJ FANCY TEKST</span>
 <h2>Oversigt over lager</h2>
-<form method="POST">
+<form method="POST" >
     {{ update_form.hidden_tag() }}
-<div class="col-auto">
-    {{ update_form.submit_update(class="btn btn-primary mb-3") }}
+<div class="float-end">
+    {{ update_form.submit_update(class="btn btn-search mb-3") }}
 </div>
 <ul>
     {% for root_category in categories recursive %}
