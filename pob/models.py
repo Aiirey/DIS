@@ -72,7 +72,7 @@ class Updates():
 def insert_user(name, password):
     cur = conn.cursor()
     sql = """
-    INSERT INTO Users(name)
+    INSERT INTO Users(name_, password_)
     VALUES (%s, %s)
     """
     cur.execute(sql, (name, password))
