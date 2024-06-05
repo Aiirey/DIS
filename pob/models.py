@@ -178,15 +178,39 @@ def create_category(id):
     else:
         return Category(*potential_category)
 
+def create_item(name):
+    cur = conn.cursor()
+    sql = """
+    SELECT ID, name_, amount, resaleprice, category_id FROM Item WHERE name_ = %s
+    """
+    cur.execute(sql, (name,))
+    potential_item = cur.fetchone()
+    cur.close()
+    if potential_item == None:
+        return potential_item
+    else:
+        return Item(*potential_item)
 
 def update_item(name, amount):
     cur = conn.cursor()
     sql = """
-    UPDATE Item SET amount = amount + %i WHERE name_ = %s
+    UPDATE Item SET amount = amount + %s WHERE name_ = %s
     """
     cur.execute(sql, (amount, name))
     conn.commit()
 
+def user_updates_item(user_id, item_name, change):
+    item = create_item(item_name)
+    update_item(item_name, change)
+    
+    cur = conn.cursor()
+    sql = """
+    INSERT INTO Updates (user_id, item_id, change, timestamp_)
+    VALUES (%s, %s, %s, %s, CURRENT_TIMESTAMP)
+    """
+
+    cur.execute(sql, (user_id, item.ID, change))
+    conn.commit()
 
 def search_item_by_item(name):
     cur = conn.cursor()
@@ -200,7 +224,6 @@ def search_item_by_item(name):
 
     return list(map(lambda item: Item(*item), items))
 
-
 def search_item_by_supplier(name):
     cur = conn.cursor()
     sql = """
@@ -213,7 +236,6 @@ def search_item_by_supplier(name):
     cur.close()
 
     return list(map(lambda item: Item(*item), items))
-
 
 def search_item_by_category(name):
     cur = conn.cursor()
