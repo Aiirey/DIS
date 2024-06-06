@@ -4,21 +4,19 @@
     {% if current_user.is_authenticated %}
         <form method="POST">
             {{ form.hidden_tag() }}
-            <div class="col-auto">
-                {{ form.search.label(class="form-label") }}
+            <div class="d-flex my-2">
+                <form method="POST">
                 {% if form.search.errors %}
-                    {{ form.search(class="form-control form-control-lg is-invalid") }}
+                    {{ form.search(class="form-control is-invalid", placeholder="Indtast produktnavn, kategori eller leverandør...") }}
                     <div>
                         {% for error in form.search.errors %}
                             <span>{{ error }}</span>
                         {% endfor %}
                     </div>
                 {% else %}
-                    {{ form.search(class="form-control form-control-lg") }}
+                    {{ form.search(class="form-control", placeholder="Indtast produktnavn, kategori eller leverandør...") }}
                 {% endif %}
-            </div>
-            <div class="col-auto">
-                {{ form.submit(class="btn btn-primary mb-3 btn-search") }}
+                {{ form.submit(class="btn btn-primary btn-search float-end ms-2") }}
             </div>
         </form>
     {% endif %}
