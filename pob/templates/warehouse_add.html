@@ -7,7 +7,7 @@
 <h2>Oversigt over lager</h2>
 <ul>
     {% for root_category in categories recursive %}
-        <li>
+        <li class="item-li">
             <span class="category">{{ root_category.name }}</span>
             <ul>
                 {% if root_category.items %}
