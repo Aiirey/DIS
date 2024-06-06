@@ -26,7 +26,7 @@ body {
     border-width: 2px;
     --bs-btn-padding-x: 2rem;
     --bs-btn-padding-y: 0.5rem;
-    width: 100px;
+    width: 95px;
 }
 
 .search-bar {
@@ -40,4 +40,8 @@ body {
 .item-li {
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.add-input {
+    width: 55px;
 }

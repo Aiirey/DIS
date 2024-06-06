@@ -15,7 +15,8 @@
                         <li class="item-li">
                             <span>{{ item.name }}</span>
                             <span class="float-end">
-                                <input type="number" name="changes-{{item.ID}}-change" placeholder="Indtast ændring...">
+                                {{ item.amount }}
+                                <input class="add-input" type="number" name="changes-{{item.ID}}-change" placeholder="-/+...">
                             </span>
                         </li>
                     {% endfor %}
