@@ -1,0 +1,25 @@
+{% extends "main.html" %}
+{% block content %}
+<h2>Lagerhistorik</h2>
+<table class="table">
+    <tr>
+      <th>Produkt</th>
+      <th>Ændring</th>
+      <th>Tidspunkt</th>
+      <th>Bruger</th>
+    </tr>
+    {% for action in history %}
+
+    {% endfor %}
+    <tr>
+      <td>Alfreds Futterkiste</td>
+      <td>Maria Anders</td>
+      <td>Germany</td>
+    </tr>
+    <tr>
+      <td>Centro comercial Moctezuma</td>
+      <td>Francisco Chang</td>
+      <td>Mexico</td>
+    </tr>
+</table>
+{% endblock content %}

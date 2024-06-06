@@ -1,6 +1,5 @@
 {% extends "main.html" %}
 {% block content %}
-    {% if has_search %}
     {% if current_user.is_authenticated %}
         <form method="POST">
             {{ form.hidden_tag() }}
@@ -19,7 +18,6 @@
                 {{ form.submit(class="btn btn-primary btn-search float-end ms-2") }}
             </div>
         </form>
-    {% endif %}
     {% endif %}
     {% include subpage %}
 {% endblock content %}
