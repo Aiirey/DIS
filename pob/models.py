@@ -59,10 +59,10 @@ class Delivers():
 
 
 class Updates():
-    def __init__(self, user_id, item_id, change, timestamp):
+    def __init__(self, user_name, item_name, change, timestamp):
         self.ID = ()
-        self.user_id = user_id
-        self.item_id = item_id
+        self.user_name = user_name
+        self.item_name = item_name
         self.change = change
         self.timestamp = timestamp
 
@@ -331,3 +331,20 @@ def find_items_by_category(items):
                 category.items += [item]
 
     return root_categories
+
+def create_history():
+    cur = conn.cursor()
+    sql = """
+    SELECT user_name, item_name, change, timestamp_ FROM
+    Updates
+    JOIN
+    (SELECT name_ AS item_name, ID FROM Item) AS Item ON Updates.item_id = Item.ID
+    JOIN
+    (SELECT name_ AS user_name, ID FROM Users) AS Users ON Updates.user_id = Users.ID
+    ORDER BY timestamp_ DESC
+    """
+    cur.execute(sql)
+    lstOfUpdates = cur.fetchall()
+    cur.close()
+
+    return list(map(lambda update: Updates(*update), lstOfUpdates))

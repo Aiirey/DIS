@@ -3,6 +3,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from pob import bcrypt
 from pob.forms import *
 from pob.models import *
+from pob.regex import *
 
 
 Pob = Blueprint('Pob', __name__)
@@ -39,12 +40,22 @@ def register():
 
     form = RegisterForm()
     if form.validate_on_submit():
-        hash_ = bcrypt.generate_password_hash(
+        if create_user(form.username.data) != None:
+            flash('Brugernavn allerede i brug.', 'danger')
+        elif not validate_username(form.username.data):
+            flash('Brugernavn skal starte med et stort bogstav og må kun indeholde bogstaver, tal, '
+                  'bindestreg og underscore.'
+                  'mellemrum.', 'danger')
+        elif not validate_password(form.password.data):
+            flash('Kodeord skal indeholde mindst ét tal og ét specialtegn og må ikke indeholde '
+                  'mellemrum.', 'danger')
+        else:
+            hash_ = bcrypt.generate_password_hash(
             form.password.data).decode('utf-8')
-        insert_user(form.username.data, hash_)
-        user = load_user(form.username.data)
-        login_user(user)
-        return redirect(url_for('Pob.index'))
+            insert_user(form.username.data, hash_)
+            user = load_user(form.username.data)
+            login_user(user)
+            return redirect(url_for('Pob.index'))
 
     return render_template('register.html', title='Opret bruger', form=form)
 
@@ -81,5 +92,5 @@ def add():
 @Pob.route("/history", methods=['GET', 'POST'])
 @login_required
 def history():
-    history = []
+    history = create_history()
     return render_template('history.html', title="Historik", history = history)

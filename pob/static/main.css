@@ -45,3 +45,7 @@ body {
 .add-input {
     width: 55px;
 }
+
+.table>:not(caption)>*>* {
+    padding: 0.5rem 1rem;
+}
