@@ -64,7 +64,7 @@ def warehouse(title, subpage, **params):
 @Pob.route("/", methods=['GET', 'POST'])
 @login_required
 def index():
-    return warehouse('Warehouse', 'warehouse_index.html', has_search = True)
+    return warehouse('Oversigt', 'warehouse_index.html')
 
 @Pob.route("/add", methods=['GET', 'POST'])
 @login_required
@@ -76,10 +76,10 @@ def add():
             change_amount = change.data['change']
             user_adds_item(current_user.id, item_id, change_amount)
         return redirect(url_for('Pob.index'))
-    return warehouse('Warehouse', 'warehouse_add.html', add_form = add_form, has_search = True)
-
+    return warehouse('Tilførsel', 'warehouse_add.html', add_form = add_form)
 
 @Pob.route("/history", methods=['GET', 'POST'])
 @login_required
 def history():
-    return warehouse('Warehouse', 'warehouse_history.html')
+    history = []
+    return render_template('history.html', title="Historik", history = history)
