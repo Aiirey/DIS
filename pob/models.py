@@ -190,7 +190,7 @@ def create_item(name):
     else:
         return Item(*potential_item)
 
-def update_item(id, amount):
+def add_item_to_item(id, amount):
     cur = conn.cursor()
     sql = """
     UPDATE Item SET amount = amount + %s WHERE ID = %s
@@ -198,10 +198,10 @@ def update_item(id, amount):
     cur.execute(sql, (amount, id))
     conn.commit()
 
-def user_updates_item(user_id, item_id, change):
+def user_adds_item(user_id, item_id, change):
     if change == "":
         return
-    update_item(item_id, change)
+    add_item_to_item(item_id, change)
     
     cur = conn.cursor()
     sql = """

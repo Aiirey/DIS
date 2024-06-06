@@ -22,8 +22,8 @@ class SearchForm(FlaskForm):
 
 
 class ChangeForm(FlaskForm):
-    change = StringField('Indtast ændring...')
+    change = StringField()
 
-class UpdateForm(FlaskForm):
+class AddForm(FlaskForm):
     changes = FieldList(FormField(ChangeForm))
-    submit_update = SubmitField('Opdater!')
+    submit_add = SubmitField('Tilfør!')

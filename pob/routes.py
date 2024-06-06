@@ -66,14 +66,14 @@ def warehouse(title, subpage, **params):
 def index():
     return warehouse('Warehouse', 'warehouse_index.html')
 
-@Pob.route("/update", methods=['GET', 'POST'])
+@Pob.route("/add", methods=['GET', 'POST'])
 @login_required
-def update():
-    update_form = UpdateForm()
-    if request.method == 'POST' and "submit_update" in request.form:
-        for change in update_form.changes:
+def add():
+    add_form = AddForm()
+    if request.method == 'POST' and "submit_add" in request.form:
+        for change in add_form.changes:
             item_id = str.removeprefix(change.id, "changes-")
             change_amount = change.data['change']
-            user_updates_item(current_user.id, item_id, change_amount)
+            user_adds_item(current_user.id, item_id, change_amount)
         return redirect(url_for('Pob.index'))
-    return warehouse('Warehouse', 'warehouse_update.html', update_form = update_form)
+    return warehouse('Warehouse', 'warehouse_add.html', add_form = add_form)
