@@ -81,5 +81,5 @@ def add():
 @Pob.route("/history", methods=['GET', 'POST'])
 @login_required
 def history():
-    history = []
+    history = create_history()
     return render_template('history.html', title="Historik", history = history)
