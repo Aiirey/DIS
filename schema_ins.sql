@@ -36,23 +36,26 @@ INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Grøn Tuborg
 INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Guld Tuborg', 60, 20, 4);       --10
 INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Sommersby Blackberry', 60, 15, 13);     --11
 INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Sommersby Apple', 60, 15, 13);          --12
-INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Sommersby Elderflower', 60, 15, 13);    --12
-INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Små Fugle', 120, 10, 6);        --12
-INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Små Sure', 120, 10, 6);         --12
-INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Små Konger', 120, 10, 6);       --12
-INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Cuba Caramel', 90, 10, 5);      --12
-INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Smirnoff Vodka', 200, 10, 5);   --12
-INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Sapphire Gin', 200, 10, 5);     --12
-INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Jägermeister', 100, 10, 5);     --12
-INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Red Bull Original', 20, 20, 7); --12
-INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Red Bull Granatæble', 20, 20, 7); --12
-INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Monster', 24, 20, 7);           --12
-INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Rød Kinley', 60, 10, 2);        --1
-INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Sport', 60, 10, 2);             --1
-INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Sprite', 60, 10, 2);            --1
-INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Schweppes Lemon', 120, 10, 2);  --1
-INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Red Bull Sukkerfri', 20, 20, 14);       --12
-INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Monster Ultra (Hvid)', 24, 20, 14);     --12
+INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Sommersby Elderflower', 60, 15, 13);    --13
+INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Små Fugle', 120, 10, 6);        --14
+INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Små Sure', 120, 10, 6);         --15
+INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Små Konger', 120, 10, 6);       --16
+INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Cuba Caramel', 90, 10, 5);      --17
+INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Smirnoff Vodka', 200, 10, 5);   --18
+INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Sapphire Gin', 200, 10, 5);     --19
+INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Jägermeister', 100, 10, 5);     --20
+INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Red Bull Original', 20, 20, 7); --21
+INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Red Bull Granatæble', 20, 20, 7); --22
+INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Monster', 24, 20, 7);           --23
+INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Rød Kinley', 60, 10, 2);        --24
+INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Sport', 60, 10, 2);             --25
+INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Sprite', 60, 10, 2);            --26
+INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Schweppes Lemon', 120, 10, 2);  --27
+INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Red Bull Sukkerfri', 20, 20, 14);       --28
+INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Monster Ultra (Hvid)', 24, 20, 14);     --29
+INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Instant Nudler med kylling', 36, 15, 12);     --30
+INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Instant Nudler med oksekød', 36, 15, 12);     --31
+INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Instant Nudler med grøntsager', 72, 15, 12);     --32
 
 
 INSERT INTO Supplier (name_) VALUES ('Carlsberg');
