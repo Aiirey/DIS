@@ -58,10 +58,11 @@ INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Instant Nudl
 INSERT INTO Item (name_, amount, resaleprice, category_id) VALUES ('Instant Nudler med grøntsager', 72, 15, 12);     --32
 
 
-INSERT INTO Supplier (name_) VALUES ('Carlsberg');
-INSERT INTO Supplier (name_) VALUES ('Drinx');
-INSERT INTO Supplier (name_) VALUES ('Sukkerfabrikken');
-INSERT INTO Supplier (name_) VALUES ('KiMs');
+INSERT INTO Supplier (name_) VALUES ('Carlsberg');                                                  --1
+INSERT INTO Supplier (name_) VALUES ('Drinx');                                                      --2
+INSERT INTO Supplier (name_) VALUES ('Sukkerfabrikken');                                            --3
+INSERT INTO Supplier (name_) VALUES ('KiMs');                                                       --4
 
 
-INSERT INTO Delivers (supplier_id, item_id, supplierprice) VALUES (1, 3, 6);
+INSERT INTO Delivers (supplier_id, item_id, supplierprice) VALUES (3, 7, 6);
+INSERT INTO Delivers (supplier_id, item_id, supplierprice) VALUES (3, 8, 3);
