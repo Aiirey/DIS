@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, FormField, FieldList
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, FormField, FieldList, SelectField
 from wtforms.validators import DataRequired
 
 
@@ -24,6 +24,16 @@ class SearchForm(FlaskForm):
 class ChangeForm(FlaskForm):
     change = StringField()
 
+
 class AddForm(FlaskForm):
     changes = FieldList(FormField(ChangeForm))
     submit_add = SubmitField('Tilfør!')
+
+
+class ItemForm(FlaskForm):
+    name = StringField('Navn', validators=[DataRequired()])
+    suppliers = SelectField('Leverandør', validators=[DataRequired()])
+    supplierprice = StringField('Indkøbspris', validators=[DataRequired()])
+    resaleprice = StringField('Salgspris', validators=[DataRequired()])
+    categories = SelectField('Kategorier', validators=[DataRequired()])
+    submit = SubmitField('Tilføj produkt')

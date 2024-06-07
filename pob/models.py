@@ -276,6 +276,18 @@ def find_all_items():
     return list(map(lambda item: Item(*item), lstOfItems))
 
 
+def find_all_suppliers():
+    cur = conn.cursor()
+    sql = """
+    SELECT * FROM Supplier ORDER BY name_
+    """
+    cur.execute(sql)
+    lstOfSuppliers = cur.fetchall()
+    cur.close()
+
+    return list(map(lambda supplier: Supplier(*supplier), lstOfSuppliers))
+
+
 def find_all_categories():
     cur = conn.cursor()
     sql = """

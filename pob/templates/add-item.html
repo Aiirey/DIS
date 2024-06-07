@@ -1,0 +1,29 @@
+{% extends "main.html" %}
+{% block content %}
+    <form method="POST">
+        {{ item_form.hidden_tag() }}
+        <div class="col-auto">
+            {{ item_form.name.label(class="form-label") }}
+            {{ item_form.name(class="form-control form-control-lg") }}
+        </div>
+        <div class="col-auto">
+            {{ item_form.categories.label(class="form-label") }}
+            {{ item_form.categories(class="form-select form-control form-control-lg") }}
+        </div>
+        <div class="col-auto">
+            {{ item_form.suppliers.label(class="form-label") }}
+            {{ item_form.suppliers(class="form-select form-control form-control-lg") }}
+        </div>
+        <div class="col-auto">
+            {{ item_form.supplierprice.label(class="form-label") }}
+            {{ item_form.supplierprice(class="form-control form-control-lg", type="number", min="0", oninput="validity.valid||(value='');") }}
+        </div>
+        <div class="col-auto">
+            {{ item_form.resaleprice.label(class="form-label") }}
+            {{ item_form.resaleprice(class="form-control form-control-lg", type="number", min="0", oninput="validity.valid||(value='');") }}
+        </div>
+        <div class="col-auto">
+            {{ item_form.submit(class="btn btn-primary mb-3") }}
+        </div>
+    </form>
+{% endblock content %}
