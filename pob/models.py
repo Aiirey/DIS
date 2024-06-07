@@ -190,6 +190,22 @@ def create_item(name):
     else:
         return Item(*potential_item)
 
+
+def create_supplier_by_item_ID(ID):
+    cur = conn.cursor()
+    sql = """
+    SELECT ID, name_ FROM Supplier
+        WHERE ID IN (SELECT supplier_id FROM Delivers WHERE item_id = %s)
+    """
+    cur.execute(sql, (ID,))
+    potential_supplier = cur.fetchone()
+    cur.close()
+    if potential_supplier == None:
+        return potential_supplier
+    else:
+        return Supplier(*potential_supplier)
+
+
 def add_item_to_item(id, amount):
     cur = conn.cursor()
     sql = """
