@@ -44,8 +44,7 @@ def register():
             flash('Brugernavn allerede i brug.', 'danger')
         elif not validate_username(form.username.data):
             flash('Brugernavn skal starte med et stort bogstav og må kun indeholde bogstaver, tal, '
-                  'bindestreg og underscore.'
-                  'mellemrum.', 'danger')
+                  'bindestreg og underscore.', 'danger')
         elif not validate_password(form.password.data):
             flash('Kodeord skal indeholde mindst ét tal og ét specialtegn og må ikke indeholde '
                   'mellemrum.', 'danger')
@@ -89,8 +88,21 @@ def add():
         return redirect(url_for('Pob.index'))
     return warehouse('Tilførsel', 'warehouse_add.html', add_form = add_form)
 
-@Pob.route("/history", methods=['GET', 'POST'])
+@Pob.route("/history")
 @login_required
 def history():
     history = create_history()
     return render_template('history.html', title="Historik", history = history)
+
+
+@Pob.route("/add-item", methods=['GET', 'POST'])
+@login_required
+def add_item():
+    item_form = ItemForm()
+    item_form.categories.choices = [(c.ID, c.name) for c in find_all_categories()]
+    item_form.suppliers.choices = [(s.ID, s.name) for s in find_all_suppliers()]
+    if item_form.validate_on_submit():
+        insert_item(item_form.name.data, item_form.resaleprice.data, item_form.categories.data)
+        insert_delivers(item_form.suppliers.data, create_item(item_form.name.data).ID, item_form.supplierprice.data)
+        return redirect(url_for('Pob.index'))
+    return render_template('add-item.html', title="Tilføj nyt produkt", item_form = item_form)
