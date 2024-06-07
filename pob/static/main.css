@@ -29,6 +29,10 @@ body {
     width: 100px;
 }
 
+.btn-add {
+    width: 200px;
+}
+
 .search-bar {
     margin-right: 100px !important;
 }
