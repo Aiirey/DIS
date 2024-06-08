@@ -20,6 +20,7 @@ bcrypt = Bcrypt(app)
 
 login_manager = LoginManager(app)
 login_manager.login_view = "Pob.login"
+login_manager.login_message = "Log ind for at få adgang."
 
 from pob.routes import Pob
 app.register_blueprint(Pob)
