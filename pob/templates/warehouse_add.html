@@ -1,31 +1,31 @@
 
-<form method="POST" >
+<form method="POST">
     {{ add_form.hidden_tag() }}
-<div class="float-end">
-    {{ add_form.submit_add(class="btn btn-search mb-3") }}
-</div>
-<h2>Oversigt over lager</h2>
-<ul>
-    {% for root_category in categories recursive %}
-        <li class="item-li">
-            <span class="category">{{ root_category.name }}</span>
-            <ul>
-                {% if root_category.items %}
-                    {% for item in root_category.items %}
-                        <li class="item-li">
-                            <span>{{ item.name }}</span>
-                            <span class="float-end">
-                                {{ item.amount }}
-                                <input class="add-input" type="number" name="changes-{{item.ID}}-change" placeholder="-/+...">
-                            </span>
-                        </li>
-                    {% endfor %}
-                {% endif %}
-                {% if root_category.subcategories %}
-                    {{ loop(root_category.subcategories)}}
-                {% endif %}
-            </ul>
-        </li>
-    {% endfor %}
-</ul>
+    <div class="float-end">
+        {{ add_form.submit_add(class="btn btn-search mb-3") }}
+    </div>
+    <h2>Oversigt over lager</h2>
+    <ul>
+        {% for root_category in categories recursive %}
+            <li class="item-li">
+                <span class="category">{{ root_category.name }}</span>
+                <ul>
+                    {% if root_category.items %}
+                        {% for item in root_category.items %}
+                            <li class="item-li">
+                                <span>{{ item.name }}</span>
+                                <span class="float-end">
+                                    {{ item.amount }}
+                                    <input class="add-input" type="number" name="changes-{{item.ID}}-change" placeholder="-/+...">
+                                </span>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+                    {% if root_category.subcategories %}
+                        {{ loop(root_category.subcategories)}}
+                    {% endif %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
 </form>

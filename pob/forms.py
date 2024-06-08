@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, FormField, FieldList, SelectField
+from wtforms import (StringField, PasswordField, SubmitField, BooleanField,
+                     FormField, FieldList, SelectField)
 from wtforms.validators import DataRequired
 
 
@@ -17,7 +18,7 @@ class RegisterForm(FlaskForm):
 
 
 class SearchForm(FlaskForm):
-    search = StringField('Indtast produktnavn, kategori eller leverandør...')
+    search = StringField()
     submit = SubmitField('Søg')
 
 

@@ -13,17 +13,16 @@ Pob = Blueprint('Pob', __name__)
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('Pob.index'))
-
     form = LoginForm()
     if form.validate_on_submit():
         user = create_user(form.username.data)
-        if user is not None and bcrypt.check_password_hash(user.password, form.password.data):
+        if user is not None and bcrypt.check_password_hash(user.password,
+                                                           form.password.data):
             user.active = True
             login_user(user, remember=form.remember.data)
             return redirect(url_for('Pob.index'))
         else:
             flash('Forkert brugernavn og/eller password.', 'danger')
-
     return render_template('login.html', title='Login', form=form)
 
 
@@ -37,17 +36,17 @@ def logout():
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('Pob.index'))
-
     form = RegisterForm()
     if form.validate_on_submit():
-        if create_user(form.username.data) != None:
+        if create_user(form.username.data) is not None:
             flash('Brugernavn allerede i brug.', 'danger')
         elif not validate_username(form.username.data):
-            flash('Brugernavn skal starte med et stort bogstav og må kun indeholde bogstaver, tal, '
-                  'bindestreg og underscore.', 'danger')
+            flash('Brugernavn skal starte med et stort bogstav og må kun '
+                  'indeholde bogstaver, tal, bindestreg og underscore.',
+                  'danger')
         elif not validate_password(form.password.data):
-            flash('Kodeord skal indeholde mindst ét tal og ét specialtegn og må ikke indeholde '
-                  'mellemrum.', 'danger')
+            flash('Kodeord skal indeholde mindst ét tal og ét specialtegn og '
+                  'må ikke indeholde mellemrum.', 'danger')
         else:
             hash_ = bcrypt.generate_password_hash(
             form.password.data).decode('utf-8')
@@ -55,7 +54,6 @@ def register():
             user = load_user(form.username.data)
             login_user(user)
             return redirect(url_for('Pob.index'))
-
     return render_template('register.html', title='Opret bruger', form=form)
 
 
@@ -74,7 +72,9 @@ def warehouse(title, subpage, **params):
 @Pob.route("/", methods=['GET', 'POST'])
 @login_required
 def index():
-    return warehouse('Oversigt', 'warehouse_index.html', get_supplier = create_supplier_by_item_ID)
+    return warehouse('Oversigt', 'warehouse_index.html',
+                     get_supplier = create_supplier_by_item_ID)
+
 
 @Pob.route("/add", methods=['GET', 'POST'])
 @login_required
@@ -88,6 +88,7 @@ def add():
         return redirect(url_for('Pob.index'))
     return warehouse('Tilførsel', 'warehouse_add.html', add_form = add_form)
 
+
 @Pob.route("/history")
 @login_required
 def history():
@@ -99,10 +100,16 @@ def history():
 @login_required
 def add_item():
     item_form = ItemForm()
-    item_form.categories.choices = [(c.ID, c.name) for c in find_all_categories()]
-    item_form.suppliers.choices = [(s.ID, s.name) for s in find_all_suppliers()]
+    item_form.categories.choices = [(c.ID, c.name)
+                                    for c in find_all_categories()]
+    item_form.suppliers.choices = [(s.ID, s.name)
+                                   for s in find_all_suppliers()]
     if item_form.validate_on_submit():
-        insert_item(item_form.name.data, item_form.resaleprice.data, item_form.categories.data)
-        insert_delivers(item_form.suppliers.data, create_item(item_form.name.data).ID, item_form.supplierprice.data)
+        insert_item(item_form.name.data, item_form.resaleprice.data,
+                    item_form.categories.data)
+        insert_delivers(item_form.suppliers.data,
+                        create_item(item_form.name.data).ID,
+                        item_form.supplierprice.data)
         return redirect(url_for('Pob.index'))
-    return render_template('add-item.html', title="Tilføj nyt produkt", item_form = item_form)
+    return render_template('add-item.html', title="Tilføj nyt produkt",
+                           item_form = item_form)

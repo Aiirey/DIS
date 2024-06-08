@@ -11,7 +11,10 @@
                             <span>{{ item.name }}</span>
                             <span class="float-end text-end" style="width: 60px ;">{{ item.amount }}</span>
                             <span class="hover-txt float-end" style="margin-right: 10px;">Vis detaljer</span>
-                            <span class="hide"> Salgspris: {{ item.resaleprice }}<br> Leverandør: {{ get_supplier(item.ID).name }} </br></span>
+                            <span class="hide">
+                                Salgspris: {{ item.resaleprice }}<br>
+                                Leverandør: {{ get_supplier(item.ID).name }}
+                            </span>
                         </li>
                     {% endfor %}
                 {% endif %}

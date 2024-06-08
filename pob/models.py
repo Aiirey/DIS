@@ -66,8 +66,6 @@ class Updates():
         self.change = change
         self.timestamp = timestamp
 
-# TODO: Make functions for all SQL operations.
-
 
 def insert_user(name, password):
     cur = conn.cursor()
@@ -177,10 +175,12 @@ def create_category(id):
     else:
         return Category(*potential_category)
 
+
 def create_item(name):
     cur = conn.cursor()
     sql = """
-    SELECT ID, name_, amount, resaleprice, category_id FROM Item WHERE name_ = %s
+    SELECT ID, name_, amount, resaleprice, category_id FROM Item
+    WHERE name_ = %s
     """
     cur.execute(sql, (name,))
     potential_item = cur.fetchone()
@@ -214,11 +214,12 @@ def add_item_to_item(id, amount):
     cur.execute(sql, (amount, id))
     conn.commit()
 
+
 def user_adds_item(user_id, item_id, change):
     if change == "":
         return
     add_item_to_item(item_id, change)
-    
+
     cur = conn.cursor()
     sql = """
     INSERT INTO Updates (user_id, item_id, change, timestamp_)
@@ -227,6 +228,7 @@ def user_adds_item(user_id, item_id, change):
 
     cur.execute(sql, (user_id, item_id, change))
     conn.commit()
+
 
 def search_item_by_item(name):
     cur = conn.cursor()
@@ -240,18 +242,22 @@ def search_item_by_item(name):
 
     return list(map(lambda item: Item(*item), items))
 
+
 def search_item_by_supplier(name):
     cur = conn.cursor()
     sql = """
     SELECT ID, name_, amount, resaleprice, category_id FROM Item
         WHERE ID IN (SELECT item_id FROM Delivers
-                        WHERE supplier_id IN (SELECT ID from Supplier WHERE name_ = %s)) ORDER BY name_
+                        WHERE supplier_id IN
+                            (SELECT ID from Supplier WHERE name_ = %s))
+    ORDER BY name_
     """
     cur.execute(sql, (name,))
     items = cur.fetchall()
     cur.close()
 
     return list(map(lambda item: Item(*item), items))
+
 
 def search_item_by_category(name):
     cur = conn.cursor()
@@ -277,7 +283,8 @@ def search_item_by_category(name):
 
 
 def search_item_by_any(name):
-    return search_item_by_item(name) + search_item_by_supplier(name) + search_item_by_category(name)
+    return (search_item_by_item(name) + search_item_by_supplier(name) +
+            search_item_by_category(name))
 
 
 def find_all_items():
@@ -360,15 +367,18 @@ def find_items_by_category(items):
 
     return root_categories
 
+
 def create_history():
     cur = conn.cursor()
     sql = """
     SELECT user_name, item_name, change, timestamp_ FROM
     Updates
     JOIN
-    (SELECT name_ AS item_name, ID FROM Item) AS Item ON Updates.item_id = Item.ID
+    (SELECT name_ AS item_name, ID FROM Item) AS Item
+    ON Updates.item_id = Item.ID
     JOIN
-    (SELECT name_ AS user_name, ID FROM Users) AS Users ON Updates.user_id = Users.ID
+    (SELECT name_ AS user_name, ID FROM Users) AS Users
+    ON Updates.user_id = Users.ID
     ORDER BY timestamp_ DESC
     """
     cur.execute(sql)

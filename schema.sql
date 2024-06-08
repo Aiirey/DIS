@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS Updates(
 	user_id integer,
 	item_id integer,
 	change integer,
-	timestamp_ TIMESTAMP, -- TODO: hvad fuck er et timestamp??
+	timestamp_ TIMESTAMP,
 	FOREIGN KEY (user_id) REFERENCES Users(ID),
 	FOREIGN KEY (item_id) REFERENCES Item(ID)
 );

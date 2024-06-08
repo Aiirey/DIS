@@ -7,5 +7,6 @@ def validate_username(username):
 
 def validate_password(password):
     return re.fullmatch(
-        "[^ ]*[0-9][^ ]*[^0-9A-ZÆØÅa-zæøå ][^ ]*|[^ ]*[^0-9A-ZÆØÅa-zæøå ][^ ]*[0-9][^ ]*",
+        "[^ ]*[0-9][^ ]*[^0-9A-ZÆØÅa-zæøå ][^ ]*"
+        "|[^ ]*[^0-9A-ZÆØÅa-zæøå ][^ ]*[0-9][^ ]*",
         password) != None

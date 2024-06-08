@@ -1,23 +1,20 @@
 {% extends "main.html" %}
 {% block content %}
-    {% if current_user.is_authenticated %}
-        <form method="POST">
-            {{ form.hidden_tag() }}
-            <div class="d-flex my-2">
-                <form method="POST">
-                {% if form.search.errors %}
-                    {{ form.search(class="form-control is-invalid", placeholder="Indtast produktnavn, kategori eller leverandør...") }}
-                    <div>
-                        {% for error in form.search.errors %}
-                            <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    {{ form.search(class="form-control", placeholder="Indtast produktnavn, kategori eller leverandør...") }}
-                {% endif %}
-                {{ form.submit(class="btn btn-primary btn-search flex-shrink-0 float-end ms-2") }}
-            </div>
-        </form>
-    {% endif %}
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="d-flex my-2">
+            {% if form.search.errors %}
+                {{ form.search(class="form-control is-invalid", placeholder="Indtast produktnavn, kategori eller leverandør...") }}
+                <div>
+                    {% for error in form.search.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.search(class="form-control", placeholder="Indtast produktnavn, kategori eller leverandør...") }}
+            {% endif %}
+            {{ form.submit(class="btn btn-primary btn-search flex-shrink-0 float-end ms-2") }}
+        </div>
+    </form>
     {% include subpage %}
 {% endblock content %}

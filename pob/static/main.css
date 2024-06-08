@@ -8,6 +8,14 @@ body {
     background: pink;
 }
 
+.add-input {
+    width: 55px;
+}
+
+.btn-add {
+    width: 200px;
+}
+
 .btn-search {
     --bs-btn-color: #fff;
     --bs-btn-bg: #cc2a63;
@@ -29,14 +37,6 @@ body {
     width: 100px;
 }
 
-.btn-add {
-    width: 200px;
-}
-
-.search-bar {
-    margin-right: 100px !important;
-}
-
 .category {
     font-weight: bold;
 }
@@ -46,11 +46,7 @@ body {
     margin-bottom: 10px;
 }
 
-.add-input {
-    width: 55px;
-}
-
-.table>:not(caption)>*>* {
+.table > :not(caption) > * > * {
     padding: 0.5rem 1rem;
 }
 
