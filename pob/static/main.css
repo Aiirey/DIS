@@ -8,6 +8,14 @@ body {
     background: pink;
 }
 
+form .btn {
+    margin-top: 10px;
+}
+
+main {
+    margin-top: 15px;
+}
+
 .add-input {
     width: 55px;
 }
@@ -39,6 +47,14 @@ body {
 
 .category {
     font-weight: bold;
+}
+
+.form-control-lg, .form-check {
+    margin-bottom: 10px;
+}
+
+.form-label {
+    margin-bottom: 0.25rem;
 }
 
 .item-li {
