@@ -234,9 +234,9 @@ def search_item_by_item(name):
     cur = conn.cursor()
     sql = """
     SELECT ID, name_, amount, resaleprice, category_id FROM Item
-        WHERE name_ = %s ORDER BY name_
+        WHERE LOWER(name_) LIKE LOWER(%s) ORDER BY name_
     """
-    cur.execute(sql, (name,))
+    cur.execute(sql, ("%" + name + "%",))
     items = cur.fetchall()
     cur.close()
 
@@ -249,10 +249,11 @@ def search_item_by_supplier(name):
     SELECT ID, name_, amount, resaleprice, category_id FROM Item
         WHERE ID IN (SELECT item_id FROM Delivers
                         WHERE supplier_id IN
-                            (SELECT ID from Supplier WHERE name_ = %s))
+                            (SELECT ID from Supplier
+                                WHERE LOWER(name_) LIKE LOWER(%s)))
     ORDER BY name_
     """
-    cur.execute(sql, (name,))
+    cur.execute(sql, ("%" + name + "%",))
     items = cur.fetchall()
     cur.close()
 
@@ -267,7 +268,7 @@ def search_item_by_category(name):
             IN (WITH RECURSIVE CTE_name AS
                 (
                 SELECT ID, supercategory_id FROM Category
-                WHERE name_ = %s
+                WHERE LOWER(name_) LIKE LOWER(%s)
                 UNION ALL
                 SELECT c.ID, c.supercategory_id
                 FROM Category c
@@ -275,7 +276,7 @@ def search_item_by_category(name):
                 )
                 SELECT ID FROM CTE_name) ORDER BY name_
     """
-    cur.execute(sql, (name,))
+    cur.execute(sql, ("%" + name + "%",))
     items = cur.fetchall()
     cur.close()
 
