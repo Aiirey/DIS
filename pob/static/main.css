@@ -12,10 +12,6 @@ body {
     width: 55px;
 }
 
-.btn-add {
-    width: 200px;
-}
-
 .btn-search {
     --bs-btn-color: #fff;
     --bs-btn-bg: #cc2a63;
@@ -35,6 +31,10 @@ body {
     --bs-btn-padding-x: 2rem;
     --bs-btn-padding-y: 0.5rem;
     width: 100px;
+}
+
+.btn-add {
+    width: 200px;
 }
 
 .category {
