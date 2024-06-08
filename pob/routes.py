@@ -62,7 +62,6 @@ def warehouse(title, subpage, **params):
     form = SearchForm()
     if form.validate_on_submit():
         search = form.search.data
-        print(search)
         if search != '':
             categories = find_items_by_category(search_item_by_any(search))
     return render_template('warehouse.html', subpage=subpage, title=title,
