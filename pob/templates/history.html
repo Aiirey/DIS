@@ -1,20 +1,20 @@
 {% extends "main.html" %}
 {% block content %}
-<h2>Lagerhistorik</h2>
-<table class="table">
-    <tr>
-        <th>Produkt</th>
-        <th class="text-end">Ændring</th>
-        <th>Tidspunkt</th>
-        <th>Bruger</th>
-    </tr>
-    {% for action in history %}
+    <h2>Historik over lager</h2>
+    <table class="table">
         <tr>
-            <td>{{ action.item_name }}</td>
-            <td class="text-end">{{ action.change }}</td>
-            <td>{{ action.timestamp }}</td>
-            <td>{{ action.user_name }}</td>
+            <th>Produkt</th>
+            <th class="text-end">Ændring</th>
+            <th>Tidspunkt</th>
+            <th>Bruger</th>
         </tr>
-    {% endfor %}
-</table>
+        {% for action in history %}
+            <tr>
+                <td>{{ action.item_name }}</td>
+                <td class="text-end">{{ action.change }}</td>
+                <td>{{ action.timestamp }}</td>
+                <td>{{ action.user_name }}</td>
+            </tr>
+        {% endfor %}
+    </table>
 {% endblock content %}
