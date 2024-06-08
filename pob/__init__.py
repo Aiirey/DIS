@@ -5,7 +5,7 @@ from flask_login import LoginManager
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'fc089b9218301ad987914c53481bff04'
+app.config["SECRET_KEY"] = "fc089b9218301ad987914c53481bff04"
 
 try:
     import db
@@ -19,7 +19,7 @@ conn = psycopg2.connect(db.db)
 bcrypt = Bcrypt(app)
 
 login_manager = LoginManager(app)
-login_manager.login_view = 'Pob.login'
+login_manager.login_view = "Pob.login"
 
 from pob.routes import Pob
 app.register_blueprint(Pob)

@@ -9,7 +9,7 @@ from pob.regex import *
 Pob = Blueprint('Pob', __name__)
 
 
-@Pob.route("/login", methods=['GET', 'POST'])
+@Pob.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('Pob.index'))
@@ -26,13 +26,13 @@ def login():
     return render_template('login.html', title='Login', form=form)
 
 
-@Pob.route("/logout")
+@Pob.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('Pob.login'))
 
 
-@Pob.route("/register", methods=['GET', 'POST'])
+@Pob.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('Pob.index'))
@@ -63,40 +63,40 @@ def warehouse(title, subpage, **params):
     if form.validate_on_submit():
         search = form.search.data
         print(search)
-        if search != "":
+        if search != '':
             categories = find_items_by_category(search_item_by_any(search))
     return render_template('warehouse.html', subpage=subpage, title=title,
                            categories=categories, form=form, **params)
 
 
-@Pob.route("/", methods=['GET', 'POST'])
+@Pob.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
     return warehouse('Oversigt', 'warehouse_index.html',
                      get_supplier = create_supplier_by_item_ID)
 
 
-@Pob.route("/add", methods=['GET', 'POST'])
+@Pob.route('/add', methods=['GET', 'POST'])
 @login_required
 def add():
     add_form = AddForm()
-    if request.method == 'POST' and "submit_add" in request.form:
+    if request.method == 'POST' and 'submit_add' in request.form:
         for change in add_form.changes:
-            item_id = str.removeprefix(change.id, "changes-")
+            item_id = str.removeprefix(change.id, 'changes-')
             change_amount = change.data['change']
             user_adds_item(current_user.id, item_id, change_amount)
         return redirect(url_for('Pob.index'))
     return warehouse('Tilførsel', 'warehouse_add.html', add_form = add_form)
 
 
-@Pob.route("/history")
+@Pob.route('/history')
 @login_required
 def history():
     history = create_history()
-    return render_template('history.html', title="Historik", history = history)
+    return render_template('history.html', title='Historik', history = history)
 
 
-@Pob.route("/add-item", methods=['GET', 'POST'])
+@Pob.route('/add-item', methods=['GET', 'POST'])
 @login_required
 def add_item():
     item_form = ItemForm()
@@ -111,5 +111,5 @@ def add_item():
                         create_item(item_form.name.data).ID,
                         item_form.supplierprice.data)
         return redirect(url_for('Pob.index'))
-    return render_template('add-item.html', title="Tilføj nyt produkt",
+    return render_template('add-item.html', title='Tilføj nyt produkt',
                            item_form = item_form)
