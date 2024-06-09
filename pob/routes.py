@@ -71,8 +71,12 @@ def warehouse(title, subpage, **params):
 @Pob.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
+    def suppliers(item_ID):
+        suppliers = list(map(lambda supplier: supplier.name,
+                             create_suppliers_by_item_ID(item_ID)))
+        return ", ".join(suppliers)
     return warehouse('Oversigt', 'warehouse_index.html',
-                     get_supplier = create_supplier_by_item_ID)
+                     get_suppliers = suppliers)
 
 
 @Pob.route('/add', methods=['GET', 'POST'])

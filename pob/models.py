@@ -191,19 +191,17 @@ def create_item(name):
         return Item(*potential_item)
 
 
-def create_supplier_by_item_ID(ID):
+def create_suppliers_by_item_ID(ID):
     cur = conn.cursor()
     sql = """
     SELECT ID, name_ FROM Supplier
         WHERE ID IN (SELECT supplier_id FROM Delivers WHERE item_id = %s)
     """
     cur.execute(sql, (ID,))
-    potential_supplier = cur.fetchone()
+    suppliers = cur.fetchall()
     cur.close()
-    if potential_supplier == None:
-        return potential_supplier
-    else:
-        return Supplier(*potential_supplier)
+
+    return list(map(lambda supplier: Supplier(*supplier), suppliers))
 
 
 def add_item_to_item(id, amount):

@@ -13,7 +13,7 @@
                             <span class="hover-txt float-end" style="margin-right: 10px;">Vis detaljer</span>
                             <span class="hide">
                                 Salgspris: {{ item.resaleprice }}<br>
-                                Leverandør: {{ get_supplier(item.ID).name }}
+                                Leverandør: {{ get_suppliers(item.ID) }}
                             </span>
                         </li>
                     {% endfor %}
