@@ -51,11 +51,13 @@ class Item():
 
 
 class Delivers():
-    def __init__(self, supplier_id, item_id, supplierprice):
+    def __init__(self, supplier_id, item_id, supplierprice,
+                 suppliername=None):
         self.ID = ()
         self.supplier_id = supplier_id
         self.item_id = item_id
         self.supplierprice = supplierprice
+        self.suppliername = suppliername
 
 
 class Updates():
@@ -191,17 +193,19 @@ def create_item(name):
         return Item(*potential_item)
 
 
-def create_suppliers_by_item_ID(ID):
+def create_delivers_by_item_ID(ID):
     cur = conn.cursor()
     sql = """
-    SELECT ID, name_ FROM Supplier
-        WHERE ID IN (SELECT supplier_id FROM Delivers WHERE item_id = %s)
+    SELECT supplier_id, item_id, supplierprice, suppliername FROM Delivers
+    JOIN (SELECT ID, name_ as suppliername FROM Supplier) AS Supplier
+    ON Delivers.supplier_id = Supplier.ID
+    WHERE item_id = %s
     """
     cur.execute(sql, (ID,))
-    suppliers = cur.fetchall()
+    delivers = cur.fetchall()
     cur.close()
 
-    return list(map(lambda supplier: Supplier(*supplier), suppliers))
+    return list(map(lambda deliverer: Delivers(*deliverer), delivers))
 
 
 def add_item_to_item(id, amount):
