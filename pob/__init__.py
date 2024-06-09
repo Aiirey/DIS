@@ -12,7 +12,7 @@ try:
 except ModuleNotFoundError:
     print("Error: Set up database connection in db.py file.")
     with open("db.py", "w") as f:
-        f.write("db = \"dbname='pob' user='postgres' password = 'UIS'\"\n")
+        f.write("db = \"dbname='pob' user='postgres' password='UIS'\"\n")
     import db
 conn = psycopg2.connect(db.db)
 
