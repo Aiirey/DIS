@@ -38,4 +38,4 @@ Finally, the web server can be accessed locally at port 5000 (by default) after 
 
     python3 run.py
 
-Custom users can be registered, but a default user `4243` with the password `4243` is included in our example data. When logged in, the app (with its Danish interface) allows you to see an overview of your current inventory, add (negative) amounts of items to your inventor, see a history of your inventory, and add new items to your inventory.
+Custom users can be registered, but a default user `4243` with the password `4243` is included in our example data. When logged in, the app (with its Danish interface) allows you to see an overview of your current inventory, add (negative) amounts of items to your inventory, see a history of your inventory, and add new items to your inventory.
