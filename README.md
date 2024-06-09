@@ -1,38 +1,41 @@
-TODO: Take inspiration from others.
+# POB &ndash; Inventory Management System
 
-## Requirements:
-Run the code below to install the necessary modules.
+Charlotte (phk642), David (mwx499), and Julie (gtm740); June 9, 2024.
+
+POB is a web-based Inventory Management System made for the Databases and Information Systems course at the University of Copenhagen.
+
+## E/R Diagram
+
+The database model for our app is illustrated in the following E/R Diagram.
+
+<!-- TODO: -->
+
+## Setup
+
+### Requirements
+
+To run the project, Python and a PostgreSQL server must be installed (and added to your path).
+
+Then, the necessary Python requirements for the Flask web server must be installed by running the following command in the project root directory:
 
     pip install -r requirements.txt
 
-For WINDOWS: Loading data into Postgres using psql needs to explicitly use UTF-8 by executing this command:
+### Database
+
+On Windows, you should run this command in a (regular) Command Prompt before importing data to insert it properly using UTF-8 encoding:
 
     set PGCLIENTENCODING=UTF8
 
-## Database init
-1. set the database in __init__.py file.
-2. run schema.sql in your database
+The necessary database tables along with our example data can (then) be loaded into a database of your choice using this command:
 
-Example: 
+    psql -d {database} -U {user} -f schema_ins.sql
 
-    psql -d{database} -U{user} -W -f schema.sql
-   
-#### notes
-For Ubuntu add host (-h127.0.0.1) to psql: 
+Additionally, the connection to this same database should be set up in the `db.py` file. This file is generated in the project root directory automatically when first attempting to start the server.
 
-    psql -d{database} -U{user} -h127.0.0.1 -W -f schema.sql
+### Usage
 
-## Running flask
-### The python way
+Finally, the web server can be accessed locally at port 5000 (by default) after starting it with this command (possibly using `py` instead of `python3` on Windows):
 
     python3 run.py
 
-### The flask way.
-
-    export FLASK_APP=run.py
-    export FLASK_DEBUG=1           (Replaces export FLASK_ENV=development)
-    export FLASK_RUN_PORT=5004     (Optional if you want to change port numbe4. Default port is port 5000.)
-    flask run
-
-#### notes
-For Windows you may have to use the SET command instead of EXPORT. Ex set FLASK_APP=run.py; set FLASK_DEBUG=1; flask run. This worked for me. Also remeber to add the path to your postgres bin-directory in order to run (SQL interpreter) and other postgres programs in any shell.
+Custom users can be registered, but a default user `4243` with the password `4243` is included in our example data. When logged in, the app (with its Danish interface) allows you to see an overview of your current inventory, add (negative) amounts of items to your inventor, see a history of your inventory, and add new items to your inventory.
