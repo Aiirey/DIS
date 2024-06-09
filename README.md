@@ -6,9 +6,9 @@ POB is a web-based Inventory Management System made for the Databases and Inform
 
 ## E/R Diagram
 
-The database model for our app is illustrated in the following E/R Diagram.
+The database model for our app is illustrated in the following E/R Diagram:
 
-<!-- TODO: -->
+![E/R Diagram](ERdiagram.png)
 
 ## Setup
 
